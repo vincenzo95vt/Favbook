@@ -13,9 +13,11 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "sass": "^1.75.0",
+    "sass-loader": "^14.2.1",
     "vite": "^5.2.10"
   },
   "dependencies": {
-    "boostrap": "^2.0.0"
+    "boostrap": "^2.0.0",
+    "bootstrap": "^5.3.3"
   }
 }

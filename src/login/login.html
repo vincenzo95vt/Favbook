@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.scss ">
-    <title>Favbook</title>
+    <link rel="stylesheet" href="../styles.scss">
+    <link rel="stylesheet" href="./login.scss">
+    <title>Document</title>
 </head>
 <body>
     <header>
@@ -27,7 +28,19 @@
         </div>
     </header>
     <main>
-        <section class="ppal-info"></section>
+        <div class="ppal-box-login">
+            <div class="login-box">
+                <h2 class="login-title">Iniciar sesión</h2>
+                <div class="controllers">
+                    <input class="field" type="text" name="user" value="" placeholder="Correo Electrónico">
+                    <input class="field" type="password" name="password" value="" placeholder="Contraseña">
+                </div>
+                <div class="login-button">
+                    <button class="sumbit-button" type="sumbit">Confirmar</button>
+                </div>
+                <a class="lost-password" href=""><p>¿Has olvidado tu contraseña?</p></a>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="footer">
@@ -43,8 +56,5 @@
             </ul>
         </div>
     </footer>
-
-
-    <script type="module" src="index.js"></script>
 </body>
 </html>

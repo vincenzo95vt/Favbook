@@ -1,9 +1,9 @@
-import { build } from "vite";
+import { defineConfig } from "vite";
 
-export default {
+export default defineConfig ({
     root: "src",
     publicDir: "../public",
     build: {
         outDir: "../dist",
     },
-};
+});

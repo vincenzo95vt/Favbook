@@ -1,4 +1,5 @@
 @use "bootstrap";////ERROR CUANDO ENTRA AL  NAVEGADOR ...........
+@use "./styles/basics.scss";
 li {
     list-style: none;
 }
@@ -12,7 +13,7 @@ header {
     position: sticky;
     top: 0px;
     .ppal-navbar {
-        background-color: #DCD8CC;
+        background-color: basics.$secondary-color;
         text-align: center;
         display: flex;
         justify-content: space-between;
@@ -50,12 +51,12 @@ header {
 .ppal-info {
     max-width: 1400px;
     height: 1800px;
-    background-color: #EFEFEF;
+    background-color: basics.$primary-color;
     margin-inline: auto;
 }
 
 footer {
-    background-color: #DCD8CC;
+    background-color: basics.$secondary-color;
     .footer {
         margin-inline: auto;
         max-width: 1600px;
@@ -65,7 +66,7 @@ footer {
         align-items: center;
         padding-block: 10px;
         padding-inline: 30px;
-        background-color: #DCD8CC;
+        background-color: basics.$secondary-color;
         .footer-index {
             display: flex;
             gap: 15px;

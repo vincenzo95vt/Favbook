@@ -3,15 +3,18 @@ export function connectionApi(){
 
     const loginElem = document.getElementById("controllers")
     loginElem.addEventListener("submit", async function(event) {
-        console.log("clicked")
         event.preventDefault()
         
-        const loginData = new FormData(this)
-        const email = loginData.get("email")
-        console.log(email)
-        const password = loginData.get("password")
-        console.log(password)
         
+        const emailInput = document.getElementById("email")
+
+        const passwordInput = document.getElementById("password")
+        
+        const emailValue = emailInput.value
+        console.log(emailValue)
+        const passwordValue = passwordInput.value
+        console.log(passwordValue)
+
 
 
         try {
@@ -20,9 +23,10 @@ export function connectionApi(){
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({email, password}),
+                body: JSON.stringify({email: emailValue, password: passwordValue}),
             });
             const data = await response.json();
+            console.log("okey", data)
             //Guardamos el token  en localStorage para futuras peticiones
             if(data) {
                 localStorage.setItem('token', data.token);

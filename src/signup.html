@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.scss">
-    <link rel="stylesheet" href="./login.scss">
+    <link rel="stylesheet" href="./styles/styles.scss">
+    <link rel="stylesheet" href="./styles/signup.scss">
     <title>Document</title>
 </head>
 <body>
@@ -28,20 +28,38 @@
         </div>
     </header>
     <main>
-        <div class="ppal-box-login">
-            <div id="login-box">
-                <h2 class="login-title">Iniciar sesión</h2>
-                <div >
-                    <form id="controllers" action="">
-                        <input id="email" type="email" name="user" placeholder="Correo Electrónico">
-                        <input id="password" type="password" name="password" placeholder="Contraseña">
-                        <div class="login-button">
-                            <button class="submit-button" type="submit">Confirmar</button>
-                        </div>
-                    </form>
-                </div>
-                <a class="lost-password" href="../registration page/registration.index.html"><p>¿No estas registrado?</p></a>
-            </div>
+       <div class="centrado">
+            <form class="form">
+                <p class="title">Registro </p>
+                <p class="message">Regístrese ahora y obtenga acceso completo a nuestra aplicación. </p>
+                    <div class="flex">
+                    <label>
+                        <input required="" placeholder="" type="text" class="input">
+                        <span>Nombre</span>
+                    </label>
+            
+                    <label>
+                        <input required="" placeholder="" type="text" class="input">
+                        <span>Apellidos</span>
+                    </label>
+                </div>  
+                        
+                <label>
+                    <input required="" placeholder="" type="email" class="input">
+                    <span>Email</span>
+                </label> 
+                    
+                <label>
+                    <input required="" placeholder="" type="password" class="input">
+                    <span>Contraseña</span>
+                </label>
+                <label>
+                    <input required="" placeholder="" type="password" class="input">
+                    <span>Confirmar Contraseña</span>
+                </label>
+                <button class="submit">Enviar</button>
+                <p class="signin">Ya tiene una cuenta <a href="../login/login.html"> Registrate en login</a></p>
+            </form>
         </div>
     </main>
     <footer>
@@ -58,7 +76,5 @@
             </ul>
         </div>
     </footer>
-
-    <script type= "module" src="../index.js"></script>
 </body>
 </html>

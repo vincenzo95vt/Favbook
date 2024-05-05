@@ -1,3 +1,5 @@
+import { login, signUp } from "../api/apiConnectionBack"
+
 export function popUpWindow(){
     const newSvg = document.createElement("img")
     newSvg.src = "../../public/img/img.svg"
@@ -11,5 +13,24 @@ export function popUpWindow(){
         const unfollowBtn =  document.createElement("button") //Aqui pegamos la funcion de dejar de seguir a usuario cuando la hagamos. 
         reportBtn.textContent= "Denunciar contenido"
         unfollowBtn.textContent= "Dejar de seguir"
+    })
+}
+
+export function listenerForLogin(){
+    const loginElem = document.getElementById("controllers")
+    loginElem.addEventListener("submit", (event) => {
+        event.preventDefault()  
+        console.log("he entrado")   
+        login()
+        
+    })
+
+}
+
+export function listenerForSignUp(){
+    const signUpElem = document.getElementById("send")
+    signUpElem.addEventListener("submit", () => {
+        console.log("he entrado")
+        signUp()
     })
 }

@@ -29,35 +29,49 @@
     </header>
     <main>
        <div class="centrado">
-            <form class="form">
+            <form id="form">
                 <p class="title">Registro </p>
                 <p class="message">Regístrese ahora y obtenga acceso completo a nuestra aplicación. </p>
-                    <div class="flex">
+                    <div id="signup-container" class="flex">
                     <label>
-                        <input required="" placeholder="" type="text" class="input">
+                        <input id="name" required="" placeholder="" type="text" class="input">
                         <span>Nombre</span>
                     </label>
-            
                     <label>
-                        <input required="" placeholder="" type="text" class="input">
+                        <input id="last-name" required="" placeholder="" type="text" class="input">
                         <span>Apellidos</span>
                     </label>
+                    <label>
+                        <input id= "age" required="" placeholder="" type="text" class="input">
+                        <span>Edad</span>
+                    </label>
                 </div>  
-                        
                 <label>
-                    <input required="" placeholder="" type="email" class="input">
+                    <select name="genero" id="select-option" >Genero
+                        <option disabled selected value="">Genero</option>
+                        <option value="Hombre"> Hombre</option>
+                        <option value="Mujer">Mujer</option>
+                    </select>
+
+                    <input id= "userName" required="" placeholder="" type="text" class="input">
+                    <span class="span-userName">Nombre de usuario</span>
+                </label>   
+                <label>
+                    <input id="email" required="" placeholder="" type="email" class="input">
                     <span>Email</span>
                 </label> 
                     
                 <label>
-                    <input required="" placeholder="" type="password" class="input">
+                    <input id="password" required="" placeholder="" type="password" class="input">
                     <span>Contraseña</span>
                 </label>
                 <label>
-                    <input required="" placeholder="" type="password" class="input">
+                    <input id="confirm-password" required="" placeholder="" type="password" class="input">
                     <span>Confirmar Contraseña</span>
                 </label>
-                <button class="submit">Enviar</button>
+                <div id="send">
+                    <button  class="submit">Enviar</button>
+                </div>
                 <p class="signin">Ya tiene una cuenta <a href="../login/login.html"> Registrate en login</a></p>
             </form>
         </div>

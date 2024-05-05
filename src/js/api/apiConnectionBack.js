@@ -38,8 +38,60 @@ async function fetchPosts(){
 
 //Hay que hacer otros endpoints, los de registrar usuario y publicaciones.
 
-async function signUp() {
-    
+export async function signUp() {
+    try {
+
+        const name = document.getElementById("name")
+        const lastName = document.getElementById("last-name")
+        const age = document.getElementById("age")
+        const userName = document.getElementById("userName")
+        const email = document.getElementById("email")
+        const password = document.getElementById("password")
+        const confirmPassword = document.getElementById("confirm-password")
+        const genre = document.getElementById("select-option")
+
+        const nameValue = name.value
+        const lastNameValue = lastName.value
+        console.log(nameValue)
+        const userNameValue = userName.value
+        const ageValue = age.value
+        const genreValue = genre.value
+        const emailValue = email.value
+        const passValue = password.value
+        const confPassValue = confirmPassword.value
+
+        if(passValue !== confPassValue) {
+            throw new Error("Las contraseñas escritas no son iguales.")
+        }
+
+        const response = await fetch("http://localhost:4000/user/signUp", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: nameValue,
+                lastName: lastNameValue,
+                userName: userNameValue,
+                age: ageValue,
+                email: emailValue, 
+                password: confPassValue,
+                genre: genreValue
+
+                }
+            ),
+        })
+        
+        const data = await response.json()
+        if(data){
+            window.location.href = "login.html"
+            return data
+        }
+        console.log(data)
+
+    } catch (error) {
+        console.error("Error fetching register posts:", error);
+    }
 }
 
 
@@ -66,44 +118,41 @@ async function refreshToken(){
     }
 }
 
-export function connectionApi(){
 
-    const loginElem = document.getElementById("controllers")
-    loginElem.addEventListener("submit", async function(event) {
-        event.preventDefault()     
-        
-        const emailInput = document.getElementById("email")
-        const passwordInput = document.getElementById("password")
-        
-        const emailValue = emailInput.value
-        const passwordValue = passwordInput.value
-
-        try {
-            const response = await fetch("http://localhost:4000/user/login", {
-                method: "POST", 
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({email: emailValue, password: passwordValue}),
-            });
-            const data = await response.json();
-
-            //Guardamos el token  en localStorage para futuras peticiones
-            if(data) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem("token_refresh", data.token_refresh);
-
-                //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
-                window.location.href = "src/index.js"
-            };
-            await fetchPosts()
-        } catch (error) {
-            console.error("Error: Cannot get the data")
+export async function login(){
+            
+    const emailInput = document.getElementById("email")
+    const passwordInput = document.getElementById("password")
     
-        }
-        window.onload = async () => {
-            await refreshToken()
-        }
-    })
+    const emailValue = emailInput.value
+    const passwordValue = passwordInput.value
+
+    try {
+        const response = await fetch("http://localhost:4000/user/login", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({email: emailValue, password: passwordValue}),
+        });
+        const data = await response.json();
+
+        //Guardamos el token  en localStorage para futuras peticiones
+        if(data) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem("token_refresh", data.token_refresh);
+
+            //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
+            window.location.href = "index.html"
+        };
+        await fetchPosts()
+    } catch (error) {
+        console.error("Error: Cannot get the data")
+
+    }
+    window.onload = async () => {
+        await refreshToken()
+    }
+    
 }
 

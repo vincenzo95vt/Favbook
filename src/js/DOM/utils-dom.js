@@ -32,5 +32,7 @@ export function listenerForSignUp(){
     signUpElem.addEventListener("submit", () => {
         console.log("he entrado")
         signUp()
+
+        //No funcionan los listener, aqui me he quedado.
     })
 }

@@ -28,11 +28,10 @@ export function listenerForLogin(){
 }
 
 export function listenerForSignUp(){
-    const signUpElem = document.getElementById("send")
-    signUpElem.addEventListener("submit", () => {
+    const signUpElem = document.getElementById("signup-card")
+    signUpElem.addEventListener("click", (event) => {
+        event.preventDefault()
         console.log("he entrado")
         signUp()
-
-        //No funcionan los listener, aqui me he quedado.
     })
 }

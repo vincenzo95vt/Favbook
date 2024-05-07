@@ -5,7 +5,7 @@
     align-items: center;
     
    }
-   #form {
+   #signup-card {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -75,11 +75,11 @@
     gap: 6px;
   }
   
-  #form label {
+  #signup-card label {
     position: relative;
   }
   
-  #form label .input {
+  #signup-card label .input {
     width: 100%;
     padding: 10px 10px 20px 10px;
     outline: 0;
@@ -87,7 +87,7 @@
     border-radius: 10px;
   }
   
-  #form label .input + span {
+  #signup-card label .input + span {
     position: absolute;
     left: 10px;
     top: 15px;
@@ -97,25 +97,25 @@
     transition: 0.3s ease;
   }
   
-  #form label .input:placeholder-shown + span {
+  #signup-card label .input:placeholder-shown + span {
     top: 15px;
     font-size: 0.9em;
   }
   
-  #form label .input:focus + span,#form label .input:valid + span {
+  #signup-card label .input:focus + span,#signup-card label .input:valid + span {
     top: 30px;
     font-size: 0.7em;
     font-weight: 600;
   }
   
-  #form label .input:valid + span {
+  #signup-card label .input:valid + span {
     color: green;
   }
   #select-option{
     margin-bottom: 12px;
   }
   
-  .submit {
+  .submit-button {
     border: none;
     outline: none;
     background-color: royalblue;

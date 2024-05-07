@@ -40,7 +40,7 @@ async function fetchPosts(){
 
 export async function signUp() {
     try {
-
+        console.log("he entrado")
         const name = document.getElementById("name")
         const lastName = document.getElementById("last-name")
         const age = document.getElementById("age")

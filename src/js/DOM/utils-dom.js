@@ -29,7 +29,7 @@ export function listenerForLogin(){
 
 export function listenerForSignUp(){
     const signUpElem = document.getElementById("signup-card")
-    signUpElem.addEventListener("click", (event) => {
+    signUpElem.addEventListener("submit", (event) => {
         event.preventDefault()
         console.log("he entrado")
         signUp()

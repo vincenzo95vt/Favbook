@@ -1,4 +1,4 @@
-
+import { createLogin, createSignUp } from "../DOM/create-dom";
 
 
 async function fetchPosts(){
@@ -60,8 +60,9 @@ export async function signUp() {
         const passValue = password.value
         const confPassValue = confirmPassword.value
 
-        if(passValue !== confPassValue) {
-            throw new Error("Las contraseñas escritas no son iguales.")
+        if(passValue !== confPassValue){
+            alert("Las contraseñas escritas no son iguales.")
+            createSignUp()
         }
 
         const response = await fetch("http://localhost:4000/user/signUp", {
@@ -77,18 +78,15 @@ export async function signUp() {
                 email: emailValue, 
                 password: confPassValue,
                 genre: genreValue
-
                 }
             ),
         })
-        
+        if(response.status === 409) return alert('El nombre de usuario o el correo ya existen')
         const data = await response.json()
+        //Vamo a comprobar que el usuario no exista ya en la base de datos.
         if(data){
-            window.location.href = "login.html"
-            return data
+            createLogin()
         }
-        console.log(data)
-
     } catch (error) {
         console.error("Error fetching register posts:", error);
     }
@@ -137,18 +135,20 @@ export async function login(){
         });
         const data = await response.json();
 
-        //Guardamos el token  en localStorage para futuras peticiones
-        if(data) {
+        //Comprobamos errores
+        if(data.status === "unauthorize"){
+            alert(data.message)
+            createLogin()
+            return
+        }else if(data.message === "success") {
+            //Guardamos el token  en localStorage para futuras peticiones
             localStorage.setItem('token', data.token);
             localStorage.setItem("token_refresh", data.token_refresh);
-
             //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
-            window.location.href = "index.html"
         };
         await fetchPosts()
     } catch (error) {
         console.error("Error: Cannot get the data")
-
     }
     window.onload = async () => {
         await refreshToken()

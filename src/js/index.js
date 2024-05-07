@@ -1,6 +1,5 @@
 import '../styles/styles.scss'; 
-import { listenerForLogin, listenerForSignUp } from './DOM/utils-dom';
+import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './DOM/utils-dom';
+import { createLogin, createSignUp} from "./DOM/create-dom"
 
-// listenerForLogin()
-listenerForSignUp() 
-//No me funcionaba porque tanto el signup como login tienen que estar en el mismo html yhacerlo dinamico. 
+createLogin()

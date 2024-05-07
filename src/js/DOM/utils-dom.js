@@ -1,5 +1,17 @@
 import { login, signUp } from "../api/apiConnectionBack"
+import {createSignUp, createLogin} from "../DOM/create-dom"
 
+export function loginOrSignUp(){
+    const appElem = document.getElementById("app")
+    appElem.addEventListener("click", (e)=>{
+        const eventClicked = e.target.className
+        console.log(eventClicked)
+        if(eventClicked === "not-user"){
+            createSignUp()
+        }else if(eventClicked === "sign-in")
+            createLogin()
+    } )
+}
 export function popUpWindow(){
     const newSvg = document.createElement("img")
     newSvg.src = "../../public/img/img.svg"
@@ -19,8 +31,7 @@ export function popUpWindow(){
 export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
     loginElem.addEventListener("submit", (event) => {
-        event.preventDefault()  
-        console.log("he entrado")   
+        event.preventDefault()   
         login()
         
     })
@@ -34,4 +45,8 @@ export function listenerForSignUp(){
         console.log("he entrado")
         signUp()
     })
+}
+
+export function userExists(){
+    
 }

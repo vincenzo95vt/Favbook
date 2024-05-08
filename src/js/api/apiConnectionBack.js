@@ -1,5 +1,43 @@
-import { createLogin, createSignUp } from "../DOM/create-dom";
+import { createLogin, createProfileCard, createSignUp } from "../DOM/create-dom";
+import { mapUserData } from "../mappers/mapper";
+async function updateProfileData(){
+    try {
 
+
+        const token = localStorage.getItem("token")
+        if(!token){
+            throw new Error("Token not found")
+        }
+        const response = await fetch("http://localhost:4000/user",{
+            method: "PATCH"
+        },{
+            headers:{
+                "Content-type":"application/json"
+            }
+        },{
+            body: JSON.stringify({
+                imgProfile,
+                name,
+                lastName,
+                userName,
+                description,
+                genre,
+                age
+            })
+        }
+    );
+        if(response.status === 200){
+            const data = await response.json()
+            console.log(data)
+            return data.data
+        }else{
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
+}
 
 async function fetchPosts(){
     try {
@@ -145,8 +183,10 @@ export async function login(){
             localStorage.setItem('token', data.token);
             localStorage.setItem("token_refresh", data.token_refresh);
             //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
+            // await createProfileCard()
         };
-        await fetchPosts()
+        const userData = await mapUserData(data.data)
+        createProfileCard(userData)
     } catch (error) {
         console.error("Error: Cannot get the data")
     }

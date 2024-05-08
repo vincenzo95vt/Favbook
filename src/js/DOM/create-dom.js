@@ -1,6 +1,52 @@
 import { popUpWindow } from "./utils-dom";
 import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './utils-dom';
 
+
+export function createProfileCard(value){
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    const divElem = document.createElement("div")
+    divElem.className = "profile-container"
+    divElem.appendChild(imgAndName(value))
+    divElem.appendChild(nameAndLastName(value))
+    divElem.appendChild(description(value))
+    appElem.appendChild(divElem)
+    return divElem
+}
+function description(value){
+    const descriptionElem = document.createElement("div")
+    const description = document.createElement("p")
+    description.innerHTML = value.description
+    descriptionElem.appendChild(description)
+    descriptionElem.className = "description-container"
+    return descriptionElem
+}
+
+function nameAndLastName(value){
+    const nameElem = document.createElement("h4")
+    nameElem.innerHTML = value.name
+    const lastNameElem = document.createElement("h4")
+    lastNameElem.innerHTML = value.lastName
+    const nameAndLastName = document.createElement("div")
+    nameAndLastName.className = "name-container"
+    nameAndLastName.appendChild(nameElem)
+    nameAndLastName.appendChild(lastNameElem)
+    return nameAndLastName
+}
+
+function imgAndName(value){
+    const imgAndName = document.createElement("div")
+    const imgProfile = document.createElement("img")
+    imgProfile.src= value.imgProfile
+    const userNameProfile = document.createElement("h3")
+    userNameProfile.innerHTML = value.userName
+    imgAndName.appendChild(imgProfile)
+    imgAndName.appendChild(userNameProfile)
+    imgAndName.className = "img-username-container"
+    return imgAndName
+}
+
+
 export function createLogin(){
     loginOrSignUp()
     const appElem = document.getElementById("app")
@@ -12,7 +58,7 @@ export function createLogin(){
             <input id="email" type="email" name="user" placeholder="Correo Electrónico">
             <input id="password" type="password" name="password" placeholder="Contraseña">
             <div class="login-button">
-                <button class="submit-button" type="submit">Confirmar</button>
+            <button class="submit-button" type="submit">Confirmar</button>
             </div>
         </form>
     </div>

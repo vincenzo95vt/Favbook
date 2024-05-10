@@ -23,6 +23,7 @@ export function listenerForUpdateProfile(){
     const updElem = document.getElementById("update-user")
     updElem.addEventListener('submit', (event) =>{
         event.preventDefault()
+        console.log("Entré")
         updateProfileData()
     })
 }

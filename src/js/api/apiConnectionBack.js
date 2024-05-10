@@ -3,7 +3,6 @@ import { mapUserData } from "../mappers/mapper";
  
 export async function updateProfileData(){
     try {
-        console.log("entre")
         const userName = document.getElementById("update-userName")
         const name = document.getElementById("update-name")
         const lastName = document.getElementById("update-last-name")
@@ -15,32 +14,31 @@ export async function updateProfileData(){
         const descriptionValue = description.value
 
         const token = localStorage.getItem("token")
+        console.log(token)
         if(!token){
             throw new Error("Token not found")
         }
 
-        const response = await fetch(`http://localhost:4000/user/updateUserDetais`,{
-            method: "PATCH"
-        },{
+        const response = await fetch(`http://localhost:4000/user/updateUserDetails`,{
+            method: "PATCH",
             headers:{
-                "Content-type":"application/json",
-                "auth-token": token
-            }
-        },{
+                "auth-token": token,
+                "Content-type":"application/json"
+            },
             body: JSON.stringify({
                 name: nameValue,
                 lastName: lastNameValue,
                 userName: userNameValue,
                 description: descriptionValue
             })
+        });
+        
+        const data = await response.json()
+        if(data.status === 401){
+            alert("You are logged out due to inactivity.")
         }
-    );
-        if(response.status === 200){
-            const data = await response.json()
+        else{
             console.log(data)
-            return data.data
-        }else{
-            throw new Error(`HTTP error! status: ${response.status}`)
         }
 
     } catch (error) {
@@ -153,6 +151,7 @@ async function refreshToken(){
         const newData = await response.json();
 
         if(newData) {
+            
             localStorage.setItem('token', newData.token);
             localStorage.setItem("token_refresh", newData.token_refresh);
         }
@@ -180,13 +179,15 @@ export async function login(){
             body: JSON.stringify({email: emailValue, password: passwordValue}),
         });
         const data = await response.json();
-
+        console.log(data)
         //Comprobamos errores
         if(data.status === "unauthorize"){
             alert(data.message)
             createLogin()
             return
-        }else if(data.message === "success") {
+        }else if(data.status === "success") {
+            //Quitamos token del localstorage si existen.
+            
             //Guardamos el token  en localStorage para futuras peticiones
             localStorage.setItem('token', data.token);
             localStorage.setItem("token_refresh", data.token_refresh);

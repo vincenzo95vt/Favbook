@@ -1,4 +1,4 @@
-import { login, signUp, updateProfileData } from "../api/apiConnectionBack"
+import { getUserDetails, login, signUp, updateProfileData } from "../api/apiConnectionBack"
 
 export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
@@ -27,3 +27,12 @@ export function listenerForUpdateProfile(){
         updateProfileData()
     })
 }
+
+export function listenerForGetUserProfile(){
+    const profileBtn = document.getElementById("button-go-profile")
+    profileBtn.addEventListener("click", ()=>{
+        getUserDetails()
+    })
+}
+
+

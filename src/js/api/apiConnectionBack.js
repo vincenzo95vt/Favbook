@@ -1,4 +1,4 @@
-import { createLogin, createProfileCard, createSignUp } from "../DOM/create-dom";
+import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp } from "../DOM/create-dom";
 import { mapUserData } from "../mappers/mapper";
  
 export async function updateProfileData(){
@@ -13,6 +13,17 @@ export async function updateProfileData(){
         const lastNameValue = lastName.value
         const descriptionValue = description.value
 
+        const requestBody = {};
+        if(userNameValue.trim() !== ""){
+            requestBody.userName = userNameValue
+        }if(nameValue.trim() !== ""){
+            requestBody.name = nameValue
+        }if(lastNameValue.trim() !== ""){
+            requestBody.lastName = lastNameValue
+        }if(descriptionValue.trim() !== ""){
+            requestBody.description = descriptionValue
+        }
+
         const token = localStorage.getItem("token")
         console.log(token)
         if(!token){
@@ -25,20 +36,15 @@ export async function updateProfileData(){
                 "auth-token": token,
                 "Content-type":"application/json"
             },
-            body: JSON.stringify({
-                name: nameValue,
-                lastName: lastNameValue,
-                userName: userNameValue,
-                description: descriptionValue
-            })
+            body: JSON.stringify(requestBody)
         });
-        
+
         const data = await response.json()
         if(data.status === 401){
             alert("You are logged out due to inactivity.")
         }
         else{
-            console.log(data)
+            getUserDetails()
         }
 
     } catch (error) {
@@ -96,7 +102,6 @@ export async function signUp() {
 
         const nameValue = name.value
         const lastNameValue = lastName.value
-        console.log(nameValue)
         const userNameValue = userName.value
         const ageValue = age.value
         const genreValue = genre.value
@@ -161,6 +166,33 @@ async function refreshToken(){
     }
 }
 
+export async function getUserDetails(){
+    try {
+        
+        const token = localStorage.getItem("token")
+        const response = await fetch("http://localhost:4000/user/profileUser", {
+            method: "GET", 
+            headers: {
+                "auth-token": token,
+            }            
+        });
+        const data = await response.json();
+        console.log(data)
+        //Comprobamos errores
+        if(data.status === 404){
+            return console.error("cannot search the data")
+        }else if(data.status === 200) {
+            const userData = await mapUserData(data.data)
+            createProfileCard(userData)
+        };
+    } catch (error) {
+        console.error("Error: Cannot get the data")
+    }
+    window.onload = async () => {
+        await refreshToken()
+    }
+}
+
 
 export async function login(){
             
@@ -196,7 +228,7 @@ export async function login(){
         };
         const userData = await mapUserData(data.data)
         localStorage.setItem("userId", userData.id)
-        createProfileCard(userData)
+        createUpdateProfileCard(userData)
     } catch (error) {
         console.error("Error: Cannot get the data")
     }

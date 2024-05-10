@@ -5,7 +5,6 @@ export function loginOrSignUp(){
     const appElem = document.getElementById("app")
     appElem.addEventListener("click", (e)=>{
         const eventClicked = e.target.className
-        console.log(eventClicked)
         if(eventClicked === "not-user"){
             createSignUp()
         }else if(eventClicked === "sign-in")
@@ -28,7 +27,3 @@ export function popUpWindow(){
     })
 }
 
-
-export function userExists(){
-    
-}

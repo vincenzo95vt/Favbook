@@ -46,4 +46,14 @@
             height: 100px;
         }
     }
+    .submit-container{
+        display: flex;
+        justify-content: space-between;
+        #submit-update{
+            width: 30%;
+        }
+        #button-go-profile{
+            width: 30%
+        }
+    }
 }

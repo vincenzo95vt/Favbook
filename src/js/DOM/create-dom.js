@@ -1,36 +1,53 @@
-import { popUpWindow } from "./utils-dom";
-import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './utils-dom';
+import { popUpWindow, loginOrSignUp } from "./utils-dom";
+import { listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
 
 
 export function createProfileCard(value){
     const appElem = document.getElementById("app")
     appElem.innerHTML = ""
-    const divElem = document.createElement("div")
+    const divElem = document.createElement("form")
+    divElem.id = "update-user"
     divElem.className = "profile-container"
     divElem.appendChild(imgAndName(value))
     divElem.appendChild(nameAndLastName(value))
     divElem.appendChild(description(value))
+    divElem.appendChild(submitBtn())
     appElem.appendChild(divElem)
+    listenerForUpdateProfile()
+    console.log(value.id)
     return divElem
 }
-function description(value){
+function description(){
     const descriptionElem = document.createElement("div")
-    const description = document.createElement("p")
-    description.innerHTML = value.description
+    const description = document.createElement("h4")
+    description.innerHTML = "Descripcion:"
+    const descriptionInput = document.createElement("textarea")
+    descriptionInput.id = "update-description"
     descriptionElem.appendChild(description)
+    descriptionElem.appendChild(descriptionInput)
     descriptionElem.className = "description-container"
     return descriptionElem
 }
 
 function nameAndLastName(value){
     const nameElem = document.createElement("h4")
-    nameElem.innerHTML = value.name
-    const lastNameElem = document.createElement("h4")
-    lastNameElem.innerHTML = value.lastName
+    nameElem.innerHTML = "Nombre:"
+    const nameInput = document.createElement("input")
+    nameInput.type = "text"
+    nameInput.placeholder = value.name
+    nameInput.id = "update-name"
+    const lastNameInput = document.createElement("input")
+    lastNameInput.type = "text"
+    lastNameInput.placeholder = value.lastName
+    lastNameInput.id = "update-last-name"
     const nameAndLastName = document.createElement("div")
     nameAndLastName.className = "name-container"
     nameAndLastName.appendChild(nameElem)
-    nameAndLastName.appendChild(lastNameElem)
+    const inputElem = document.createElement("div")
+    inputElem.className = "input-group"
+    inputElem.appendChild(nameInput)
+    inputElem.appendChild(lastNameInput)
+    nameAndLastName.appendChild(inputElem)
     return nameAndLastName
 }
 
@@ -38,14 +55,30 @@ function imgAndName(value){
     const imgAndName = document.createElement("div")
     const imgProfile = document.createElement("img")
     imgProfile.src= value.imgProfile
+    imgProfile.className = "profile-img"
     const userNameProfile = document.createElement("h3")
-    userNameProfile.innerHTML = value.userName
+    const divElem = document.createElement("div")
+    divElem.className = "profile-userName"
+    userNameProfile.innerHTML = "Username:"
+    const userNameInput = document.createElement("input")
+    userNameInput.type = "text"
+    userNameInput.placeholder = value.userName
+    userNameInput.id = "update-userName"
+    divElem.appendChild(userNameProfile)
+    divElem.appendChild(userNameInput)
     imgAndName.appendChild(imgProfile)
-    imgAndName.appendChild(userNameProfile)
+    imgAndName.appendChild(divElem)
     imgAndName.className = "img-username-container"
     return imgAndName
 }
 
+function submitBtn(){
+    const btnSubmit = document.createElement("button")
+    btnSubmit.innerText ="Update Profile"
+    btnSubmit.id ="submit-update"
+    btnSubmit.type = "submit"
+    return btnSubmit
+}
 
 export function createLogin(){
     loginOrSignUp()

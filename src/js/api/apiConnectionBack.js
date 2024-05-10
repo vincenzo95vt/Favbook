@@ -1,28 +1,37 @@
 import { createLogin, createProfileCard, createSignUp } from "../DOM/create-dom";
 import { mapUserData } from "../mappers/mapper";
-async function updateProfileData(){
+ 
+export async function updateProfileData(){
     try {
+        console.log("entre")
+        const userName = document.getElementById("update-userName")
+        const name = document.getElementById("update-name")
+        const lastName = document.getElementById("update-last-name")
+        const description = document.getElementById("update-description")
 
+        const userNameValue = userName.value
+        const nameValue = name.value
+        const lastNameValue = lastName.value
+        const descriptionValue = description.value
 
         const token = localStorage.getItem("token")
         if(!token){
             throw new Error("Token not found")
         }
-        const response = await fetch("http://localhost:4000/user",{
+
+        const response = await fetch(`http://localhost:4000/user/updateUserDetais`,{
             method: "PATCH"
         },{
             headers:{
-                "Content-type":"application/json"
+                "Content-type":"application/json",
+                "auth-token": token
             }
         },{
             body: JSON.stringify({
-                imgProfile,
-                name,
-                lastName,
-                userName,
-                description,
-                genre,
-                age
+                name: nameValue,
+                lastName: lastNameValue,
+                userName: userNameValue,
+                description: descriptionValue
             })
         }
     );
@@ -78,7 +87,6 @@ async function fetchPosts(){
 
 export async function signUp() {
     try {
-        console.log("he entrado")
         const name = document.getElementById("name")
         const lastName = document.getElementById("last-name")
         const age = document.getElementById("age")
@@ -119,8 +127,8 @@ export async function signUp() {
                 }
             ),
         })
-        if(response.status === 409) return alert('El nombre de usuario o el correo ya existen')
         const data = await response.json()
+        if(response.status === 409) return alert(data.message)
         //Vamo a comprobar que el usuario no exista ya en la base de datos.
         if(data){
             createLogin()
@@ -186,6 +194,7 @@ export async function login(){
             // await createProfileCard()
         };
         const userData = await mapUserData(data.data)
+        localStorage.setItem("userId", userData.id)
         createProfileCard(userData)
     } catch (error) {
         console.error("Error: Cannot get the data")

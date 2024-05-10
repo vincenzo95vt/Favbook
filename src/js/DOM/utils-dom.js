@@ -28,24 +28,6 @@ export function popUpWindow(){
     })
 }
 
-export function listenerForLogin(){
-    const loginElem = document.getElementById("controllers")
-    loginElem.addEventListener("submit", (event) => {
-        event.preventDefault()   
-        login()
-        
-    })
-
-}
-
-export function listenerForSignUp(){
-    const signUpElem = document.getElementById("signup-card")
-    signUpElem.addEventListener("submit", (event) => {
-        event.preventDefault()
-        console.log("he entrado")
-        signUp()
-    })
-}
 
 export function userExists(){
     

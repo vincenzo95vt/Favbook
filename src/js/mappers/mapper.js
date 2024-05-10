@@ -1,6 +1,7 @@
 export function mapUserData(data){
     const defaultValue = "No disponible"
     return  {
+        id: data.userId ?? defaultValue,
         userName: data.userName ?? defaultValue,
         name: data.name ?? defaultValue,
         lastName: data.lastName ?? defaultValue,

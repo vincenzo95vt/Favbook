@@ -1,12 +1,16 @@
 import { popUpWindow, loginOrSignUp } from "./utils-dom";
-import { listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
+import { listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
 import { getUserDetails } from "../api/apiConnectionBack";
 
 
 export function createUpdateProfileCard(value){
     const appElem = document.getElementById("app")
     appElem.innerHTML = ""
+    const elemContainer = document.createElement("div")
+    appElem.appendChild(elemContainer)
+    elemContainer.className = "container-info-updating"
     const divElem = document.createElement("form")
+    elemContainer.appendChild(divElem)
     divElem.id = "update-user"
     divElem.className = "profile-container"
     const submitContainer = document.createElement("div")
@@ -17,8 +21,8 @@ export function createUpdateProfileCard(value){
     submitContainer.appendChild(submitBtn())
     submitContainer.appendChild(goToProfileSubmit())
     divElem.appendChild(submitContainer)
-    appElem.appendChild(divElem)
-    listenerForUpdateProfile()
+   listenerForUpdateProfile()
+    listenerForGetUserProfile()
     return divElem
 }
 export function createProfileCard(value){
@@ -165,15 +169,15 @@ export function createLogin(){
     appElem.innerHTML = `
     <div id="login-box">
     <h2 class="login-title">Iniciar sesión</h2>
-    <div class="controllers-container">
         <form id="controllers" action="">
-            <input id="email" type="email" name="user" placeholder="Correo Electrónico">
-            <input id="password" type="password" name="password" placeholder="Contraseña">
+            <div class= "info-container">
+                <input id="email" type="email" name="user" placeholder="Correo Electrónico">
+                <input id="password" type="password" name="password" placeholder="Contraseña">
+            </div>
             <div class="login-button">
-            <button class="submit-button" type="submit">Confirmar</button>
+                <button class="submit-button" type="submit">Confirmar</button>
             </div>
         </form>
-    </div>
     <a class="not-user">¿No estas registrado?</a>`
     listenerForLogin()
 }

@@ -32,6 +32,7 @@ export function listenerForGetUserProfile(){
     const profileBtn = document.getElementById("button-go-profile")
     profileBtn.addEventListener("click", ()=>{
         getUserDetails()
+        console.log("He entrado")
     })
 }
 

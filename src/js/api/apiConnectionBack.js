@@ -179,12 +179,9 @@ export async function getUserDetails(){
         const data = await response.json();
         console.log(data)
         //Comprobamos errores
-        if(data.status === 404){
-            return console.error("cannot search the data")
-        }else if(data.status === 200) {
-            const userData = await mapUserData(data.data)
-            createProfileCard(userData)
-        };
+        if(data.status === 404) return console.error("cannot search the data")
+        const userData = await mapUserData(data.data)
+        createProfileCard(userData)
     } catch (error) {
         console.error("Error: Cannot get the data")
     }

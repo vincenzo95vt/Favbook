@@ -156,3 +156,19 @@ export async function login(){
     
 }
 
+export async function createList () {
+    try {
+        const response = await fetch("http://localhost:4000/user/:id", {
+            method: "PATCH", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const data = await response.json();
+        console.log(data);
+        
+    } catch (error) {
+        console.error("Error: Cannot get the data")
+    }
+}

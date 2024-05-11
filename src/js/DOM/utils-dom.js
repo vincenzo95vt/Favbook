@@ -1,4 +1,4 @@
-import { login, signUp } from "../api/apiConnectionBack"
+import { createList, login, signUp } from "../api/apiConnectionBack"
 import {createSignUp, createLogin} from "../DOM/create-dom"
 
 export function loginOrSignUp(){
@@ -43,7 +43,16 @@ export function listenerForSignUp(){
     signUpElem.addEventListener("submit", (event) => {
         event.preventDefault()
         console.log("he entrado")
-        signUp()
+        signUp();
+    })
+}
+
+export function listenerForCreateList(){
+    const createListElem = document.getElementById("create-list")
+    createListElem.addEventListener("submit", (event) => {
+        event.preventDefault()
+        console.log("he entrado lista")
+        createList();
     })
 }
 

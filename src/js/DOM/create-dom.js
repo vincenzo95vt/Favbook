@@ -1,5 +1,5 @@
 import { popUpWindow } from "./utils-dom";
-import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './utils-dom';
+import { listenerForLogin, listenerForSignUp, loginOrSignUp, listenerForCreateList } from './utils-dom';
 
 export function createLogin(){
     loginOrSignUp()
@@ -62,6 +62,17 @@ export function createSignUp(){
 </form>`
 listenerForSignUp()
 }
+
+export function createListBuilder(){
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = `
+        <form class="lists">
+            <input id="name" type="name" name="user" placeholder="Nombre de la lista">
+            <input id="description" type="text" name="description" placeholder="Descripcion">
+            <button id="create-list" type="submit">Crear lista</button>
+        </form>`
+    listenerForCreateList();
+    }
 
 function addPostBox(){
     const divApp =  document.getElementById('app');

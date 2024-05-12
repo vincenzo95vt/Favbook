@@ -1,4 +1,7 @@
 import { getUserDetails, login, signUp, updateProfileData } from "../api/apiConnectionBack"
+import { createUpdateProfileCard } from "./create-dom"
+import { changePrivacy } from "./utils-dom"
+import { userData } from "../api/apiConnectionBack"
 
 export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
@@ -36,4 +39,17 @@ export function listenerForGetUserProfile(){
     })
 }
 
+export function listenerForEditProfile(){
+    const btnElem = document.getElementById("btnEdit")
+    btnElem.addEventListener("click", ()=>{
+        console.log(userData)
+        createUpdateProfileCard(userData)
+    })
+}
 
+export function listenerForOptionsInProfile(){
+    const btnElem = document.getElementById("app-profile")
+    btnElem.addEventListener("click", () =>{
+
+    })
+}

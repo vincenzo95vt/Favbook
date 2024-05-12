@@ -27,3 +27,7 @@ export function popUpWindow(){
     })
 }
 
+export function changePrivacy(value){
+    if(value === "Privado") return "private"
+    return "public"
+}

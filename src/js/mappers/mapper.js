@@ -8,6 +8,7 @@ export function mapUserData(data){
         age: data.age ?? defaultValue,
         imgProfile: data.imgProfile ?? defaultValue,     
         description: data.description ?? defaultValue, 
-        genre: data.genre ?? defaultValue
+        genre: data.genre ?? defaultValue,
+        privacy: data.privacy ?? defaultValue
     }
 }

@@ -1,17 +1,28 @@
 import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp } from "../DOM/create-dom";
+import { addPostBox } from "../DOM/homeHTMLElements";
+import { createHeader } from "../DOM/profileHTMLElemens";
+import { changePrivacy } from "../DOM/utils-dom";
 import { mapUserData } from "../mappers/mapper";
- 
+
+//El UserData guardado en el login, lo recogemos para convertirlo en una constante global y asi poder manejar mejor el DOM.
+
+const stringedData = localStorage.getItem("data")
+export const userData = JSON.parse(stringedData)
+
 export async function updateProfileData(){
     try {
         const userName = document.getElementById("update-userName")
         const name = document.getElementById("update-name")
         const lastName = document.getElementById("update-last-name")
         const description = document.getElementById("update-description")
+        const privacy = document.getElementById("privacy")
+
 
         const userNameValue = userName.value
         const nameValue = name.value
         const lastNameValue = lastName.value
         const descriptionValue = description.value
+        const privacyValue = changePrivacy(privacy.value)
 
         const requestBody = {};
         if(userNameValue.trim() !== ""){
@@ -22,6 +33,8 @@ export async function updateProfileData(){
             requestBody.lastName = lastNameValue
         }if(descriptionValue.trim() !== ""){
             requestBody.description = descriptionValue
+        }if(privacyValue.trim() !== ""){
+            requestBody.privacy = privacyValue
         }
 
         const token = localStorage.getItem("token")
@@ -52,13 +65,14 @@ export async function updateProfileData(){
     }
 }
 
-async function fetchPosts(){
+
+export async function fetchPosts(){
     try {
         const token = localStorage.getItem("token")
         if(!token){
             throw new Error("Token not found");
         }
-        const response = await fetch("http://localhost:4000/posts", {
+        const response = await fetch("http://localhost:4000/posts/", {
             headers: {
                 "auth-token": token
             },
@@ -81,13 +95,12 @@ async function fetchPosts(){
         console.log(data) //Vamos a ver que nos devuelve para manejar los datos a nuestra manera.
 
         const posts = data.data;
-        return posts
+        return addPostBox(posts)
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
 }
 
-//Hay que hacer otros endpoints, los de registrar usuario y publicaciones.
 
 export async function signUp() {
     try {
@@ -113,22 +126,22 @@ export async function signUp() {
             alert("Las contraseñas escritas no son iguales.")
             createSignUp()
         }
+        const requestedBody = {
+            name: nameValue,
+            lastName: lastNameValue,
+            userName: userNameValue,
+            age: ageValue,
+            email: emailValue, 
+            password: confPassValue,
+            genre: genreValue
+            }
 
         const response = await fetch("http://localhost:4000/user/signUp", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                name: nameValue,
-                lastName: lastNameValue,
-                userName: userNameValue,
-                age: ageValue,
-                email: emailValue, 
-                password: confPassValue,
-                genre: genreValue
-                }
-            ),
+            body: JSON.stringify(requestedBody),
         })
         const data = await response.json()
         if(response.status === 409) return alert(data.message)
@@ -190,7 +203,6 @@ export async function getUserDetails(){
     }
 }
 
-
 export async function login(){
             
     const emailInput = document.getElementById("email")
@@ -224,8 +236,12 @@ export async function login(){
             // await createProfileCard()
         };
         const userData = await mapUserData(data.data)
+        console.log(userData)
         localStorage.setItem("userId", userData.id)
+        //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
+        localStorage.setItem("data", JSON.stringify(userData))
         createUpdateProfileCard(userData)
+        
     } catch (error) {
         console.error("Error: Cannot get the data")
     }

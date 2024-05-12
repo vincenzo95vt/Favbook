@@ -1,5 +1,6 @@
 @use "bootstrap";////ERROR CUANDO ENTRA AL  NAVEGADOR ...........
 @use "./basics.scss";
+@use "./header.scss";
 @use "./login.scss";
 @use "./singup.scss";
 @use "./updateProfile.scss";
@@ -15,6 +16,7 @@ a {
 body{
   font-family: "Radio Canada Big", sans-serif;
   color: basics.$primary-color;
+  background:linear-gradient(to bottom right, #ff0000, #0000ff);
   input {
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
@@ -34,50 +36,20 @@ body{
     color: #fff;
     font-size: 16px;
   }
+  select{
+    border: none;
+    outline: none;
+    height: auto;
+    background-color: royalblue;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+  }
 }
-header {
-    position: sticky;
-    top: 0px;
-    .ppal-navbar {
-        background-color: basics.$secondary-color;
-        text-align: center;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-block: 10px;
-        padding-inline: 30px;
-        .main-menu {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            .main-menu-img{
-                object-fit: cover;
-                width: 50px;
-                height: 50px;  
-                img{
-                    width: 50px;
-                    height: 50px;
-                }
-            }
-        }
-        .search-bar {
-            .search-input {
-                width: 500px;
-                border-radius: 50px;
-            }
-            .search-button {
-                border-radius: 50px;
-            }
-        }
-    }
-}
-
 
 
 footer {
-    background-color:purple;
     .footer {
         margin-inline: auto;
         max-width: 1600px;
@@ -85,7 +57,6 @@ footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: purple;
         .footer-index {
             display: flex;
             gap: 15px;

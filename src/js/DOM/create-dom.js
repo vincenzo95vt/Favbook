@@ -1,5 +1,62 @@
-import { popUpWindow } from "./utils-dom";
-import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './utils-dom';
+import { loginOrSignUp } from "./utils-dom";
+import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
+import { getUserDetails } from "../api/apiConnectionBack";
+import { imgAndName,
+    imgAndNameUpdated, 
+    description, 
+    descriptionUpdated, 
+    nameAndLastName, 
+    nameAndLastNameUpdated, 
+    submitBtn, 
+    goToProfileSubmit,
+    editProfile, 
+    createHeader } from "./profileHTMLElemens";
+import { addPostBox } from "./homeHTMLElements";
+
+
+export function createHomePage(){
+    createHeader(value)
+    addPostBox(value)
+}
+
+export function createUpdateProfileCard(value){
+    createHeader(value)
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    const elemContainer = document.createElement("div")
+    appElem.appendChild(elemContainer)
+    elemContainer.className = "container-info-updating"
+    const divElem = document.createElement("form")
+    elemContainer.appendChild(divElem)
+    divElem.id = "update-user"
+    divElem.className = "profile-container"
+    const submitContainer = document.createElement("div")
+    submitContainer.className = "submit-container"
+    divElem.appendChild(imgAndName(value))
+    divElem.appendChild(nameAndLastName(value))
+    divElem.appendChild(description(value))
+    submitContainer.appendChild(submitBtn())
+    submitContainer.appendChild(goToProfileSubmit())
+    divElem.appendChild(submitContainer)
+    listenerForUpdateProfile()
+    listenerForGetUserProfile()
+    return divElem
+}
+export function createProfileCard(value){
+    
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    const divElem = document.createElement("div")
+    divElem.id = "profile-userdata"
+    divElem.className = "profile-container"
+    divElem.append(editProfile(value))
+    divElem.appendChild(imgAndNameUpdated(value))
+    divElem.appendChild(nameAndLastNameUpdated(value))
+    divElem.appendChild(descriptionUpdated(value))
+    appElem.appendChild(divElem)
+    listenerForEditProfile()
+    return divElem
+}
 
 export function createLogin(){
     loginOrSignUp()
@@ -7,15 +64,15 @@ export function createLogin(){
     appElem.innerHTML = `
     <div id="login-box">
     <h2 class="login-title">Iniciar sesión</h2>
-    <div class="controllers-container">
         <form id="controllers" action="">
-            <input id="email" type="email" name="user" placeholder="Correo Electrónico">
-            <input id="password" type="password" name="password" placeholder="Contraseña">
+            <div class= "info-container">
+                <input id="email" type="email" name="user" placeholder="Correo Electrónico">
+                <input id="password" type="password" name="password" placeholder="Contraseña">
+            </div>
             <div class="login-button">
                 <button class="submit-button" type="submit">Confirmar</button>
             </div>
         </form>
-    </div>
     <a class="not-user">¿No estas registrado?</a>`
     listenerForLogin()
 }
@@ -62,38 +119,3 @@ export function createSignUp(){
 </form>`
 listenerForSignUp()
 }
-
-function addPostBox(){
-    const divApp =  document.getElementById('app');
-    const  newDiv = document.createElement("div");
-    divApp.appendChild(newDiv)
-    divApp.appendChild(addProfileData())
-    divApp.appendChild(addImgPost())
-}
-
-function addProfileData(value){
-    const newDiv = document.createElement("div")
-    const otherDiv = document.createElement("div")
-    const newH2 = document.createElement("h2")
-    newH2.className = "profile-username"
-    newH2.innerHTML = `${value}` //Aqui iria el nombre de usuario que nos traeremos de la api nuestra.
-    otherDiv.appendChild(newH2)
-    otherDiv.appendChild(popUpWindow())
-    newDiv.appendChild(profileImg())
-    newDiv.appendChild(otherDiv)
-}
-
-function profileImg(value) {
-    const newImg = document.createElement("img")
-    newImg.className = "img-profile"
-    newImg.src = value //Ruta de la imagen de perfil del usuario.
-    newImg.alt = "Profile Picture"
-}
-
-function addImgPost(value){
-    const newImg = document.createElement("img")
-    newImg.className ="post-image";
-    newImg.src= value; //Aqui iria el url que le vamos a pasar por parametros "value"    
-}
-
-

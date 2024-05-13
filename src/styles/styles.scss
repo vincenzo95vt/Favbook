@@ -273,7 +273,7 @@ footer {
 
 .card-client {
   background: #555;
-  width: 13rem;
+  width: 18rem;
   padding-top: 25px;
   padding-bottom: 25px;
   padding-left: 20px;
@@ -285,6 +285,9 @@ footer {
   color: #fff;
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
+  display: inline-block;
+  margin-right: 5px; /* Agregar margen a la derecha de cada tarjeta */
+
 }
 
 .card-client:hover {
@@ -314,12 +317,14 @@ footer {
   margin-top: 20px;
   font-weight: 600;
   font-size: 18px;
+  
 }
 
 .name-client span {
   display: block;
   font-weight: 200;
   font-size: 16px;
+  word-wrap: break-word; /* Dividir el texto para ajustarlo al ancho */
 }
 
 .social-media:before {

@@ -198,95 +198,60 @@ export async function login(){
 
 export async function searchApi(){
 
-    const searchInput = document.getElementById("valueSearch")
-    const searchValue = searchInput.value
-    console.log(searchValue)
+    // Obtener el valor de búsqueda del input
+    const searchInput = document.getElementById("valueSearch");
+    const searchValue = searchInput.value;
+    console.log(searchValue);
 
-  try{
-    //BUSCAR A USUARIOS
-    const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        }, 
-        
-    });
-    const userData = await userResponse.json();
-
-    if(userData.length === 0){
-         res.status(200).json({
-            status: "success",
-            message: "Not users found"
-         });
-
-    }   
-    //pruebas 
-          // crear una carta para usuario 
-         const data = mapUserData(userData)
-         createCardUser(data)
-         console.log(data.data)
-
-    // BUSCAR PRODUCTOS 
-    const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
-        method:"GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        
-    });
-    
-    const productoData = await productsResponse.json();
-           console.log(userData,productoData)
-    if(productoData.length === 0){
-        res.status(200).json({
-           status: "success",
-           message: "Not users found"
+    try {
+        // BUSCAR USUARIOS
+        const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
-   }
-                 // crear la carta para producto 
+        const userData = await userResponse.json();
 
-          const dataProducts  = mapUserData(productoData)
+        // Verificar si no se encontraron usuarios
+        if (userData.length === 0) {
+            // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
+            res.status(200).json({
+                status: "success",
+                message: "Not users found"
+            });
+        } else {
+            // Mapear los datos de usuario
+            const data = mapUserData(userData);
+            // Crear tarjeta de usuario
+            createCardUser(userData.data);
+        }
 
-  } catch (error) {
-    console.log("Error al realizar la busqueda",
-     error.message
-    );
-  }
+        // BUSCAR PRODUCTOS
+        const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-}
+        const productoData = await productsResponse.json();
 
-// export async function searchApi() {
-//     const searchInput = document.getElementById("valueSearch");
-//     const searchValue = searchInput.value;
-//     console.log(searchValue);
+        // Verificar si no se encontraron productos
+        if (productoData.length === 0) {
+            // Enviar respuesta con mensaje de éxito y sin productos encontrados
+            res.status(200).json({
+                status: "success",
+                message: "Not users found"
+            });
+        }
 
-//     try {
-//         // BUSCAR A USUARIOS
-//         const userResponse = await fetch(`http://localhost:4000/user/getuser?userName=${searchValue}`, {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json" // Corregido el error de "aplication" a "application"
-//             }
-//         });
-//         const userData = await userResponse.json();
+        // Mapear los datos de producto
+        const dataProducts  = mapUserData(productoData);
 
-//         // BUSCAR PRODUCTOS 
-//         const productsResponse = await fetch(`http://localhost:4000/post/?postName=${searchValue}`, {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json" // Corregido el error de "aplication" a "application"
-//             }
-//         });
-//         const productoData = await productsResponse.json();
+    } catch (error) {
+        // Capturar y manejar errores
+        console.log("Error al realizar la búsqueda", error.message);
+    }
 
-//         // Mirar si se encontraron resultados 
-//         const resultsFound = userData.data.length > 0 || productoData.data.length > 0;
-//         if (resultsFound) {
-//             console.log("Se encontraron resultados");
-//         } else {
-//             console.log("No se encontraron resultados");
-//         }
-//     } catch (error) {
-//         console.log("Error al realizar la búsqueda:", error.message);
-//     }
-// }
+};

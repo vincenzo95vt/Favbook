@@ -1,4 +1,4 @@
-import { createLogin, createProfileCard, createSignUp } from "../DOM/create-dom";
+import { createCardUser, createLogin, createProfileCard, createSignUp } from "../DOM/create-dom";
 import { mapUserData } from "../mappers/mapper";
 async function updateProfileData(){
     try {
@@ -196,3 +196,97 @@ export async function login(){
     
 }
 
+export async function searchApi(){
+
+    const searchInput = document.getElementById("valueSearch")
+    const searchValue = searchInput.value
+    console.log(searchValue)
+
+  try{
+    //BUSCAR A USUARIOS
+    const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }, 
+        
+    });
+    const userData = await userResponse.json();
+
+    if(userData.length === 0){
+         res.status(200).json({
+            status: "success",
+            message: "Not users found"
+         });
+
+    }   
+    //pruebas 
+          // crear una carta para usuario 
+         const data = mapUserData(userData)
+         createCardUser(data)
+         console.log(data.data)
+
+    // BUSCAR PRODUCTOS 
+    const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
+        method:"GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        
+    });
+    
+    const productoData = await productsResponse.json();
+           console.log(userData,productoData)
+    if(productoData.length === 0){
+        res.status(200).json({
+           status: "success",
+           message: "Not users found"
+        });
+   }
+                 // crear la carta para producto 
+
+          const dataProducts  = mapUserData(productoData)
+
+  } catch (error) {
+    console.log("Error al realizar la busqueda",
+     error.message
+    );
+  }
+
+}
+
+// export async function searchApi() {
+//     const searchInput = document.getElementById("valueSearch");
+//     const searchValue = searchInput.value;
+//     console.log(searchValue);
+
+//     try {
+//         // BUSCAR A USUARIOS
+//         const userResponse = await fetch(`http://localhost:4000/user/getuser?userName=${searchValue}`, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json" // Corregido el error de "aplication" a "application"
+//             }
+//         });
+//         const userData = await userResponse.json();
+
+//         // BUSCAR PRODUCTOS 
+//         const productsResponse = await fetch(`http://localhost:4000/post/?postName=${searchValue}`, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json" // Corregido el error de "aplication" a "application"
+//             }
+//         });
+//         const productoData = await productsResponse.json();
+
+//         // Mirar si se encontraron resultados 
+//         const resultsFound = userData.data.length > 0 || productoData.data.length > 0;
+//         if (resultsFound) {
+//             console.log("Se encontraron resultados");
+//         } else {
+//             console.log("No se encontraron resultados");
+//         }
+//     } catch (error) {
+//         console.log("Error al realizar la búsqueda:", error.message);
+//     }
+// }

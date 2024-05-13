@@ -1,4 +1,4 @@
-import { popUpWindow, loginOrSignUp } from "./utils-dom";
+import { loginOrSignUp } from "./utils-dom";
 import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
 import { getUserDetails } from "../api/apiConnectionBack";
 import { imgAndName,
@@ -11,10 +11,12 @@ import { imgAndName,
     goToProfileSubmit,
     editProfile, 
     createHeader } from "./profileHTMLElemens";
+import { addPostBox } from "./homeHTMLElements";
 
 
 export function createHomePage(){
-    createHeader()
+    createHeader(value)
+    addPostBox(value)
 }
 
 export function createUpdateProfileCard(value){

@@ -158,7 +158,7 @@ export function createHeader(value){
         <button class="search-button" type="submit">Buscar</button>
     </form>
     <ul class="main-menu">
-        <li class="main-menu-text"><a href=""></a>Mi perfil</li>
+        <li class="main-menu-text"><a href=""></a>${value.userName}</li>
         <li id= "app-profile" class="main-menu-img"><a href=""><img src=${value.imgProfile} alt="Foto del usuario"></a></li>
     </ul>
 </div>

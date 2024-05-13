@@ -1,8 +1,8 @@
-import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp } from "../DOM/create-dom";
+import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp, createHomePage } from "../DOM/create-dom";
 import { addPostBox } from "../DOM/homeHTMLElements";
 import { createHeader } from "../DOM/profileHTMLElemens";
 import { changePrivacy } from "../DOM/utils-dom";
-import { mapUserData } from "../mappers/mapper";
+import { mapPostData, mapUserData } from "../mappers/mapper";
 
 //El UserData guardado en el login, lo recogemos para convertirlo en una constante global y asi poder manejar mejor el DOM.
 
@@ -80,8 +80,8 @@ export async function fetchPosts(){
 
         if(response.status === 200){
             const data = await response.json()
-            console.log(data)
-            return data.data
+            const posts = data.data
+            return posts;
         }else if(response.status === 400) {
             //Token caducado, llamar a refreshToken en caso de no haberse ejecutado. 
 
@@ -89,13 +89,7 @@ export async function fetchPosts(){
 
         }else{
             throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
-        console.log(data) //Vamos a ver que nos devuelve para manejar los datos a nuestra manera.
-
-        const posts = data.data;
-        return addPostBox(posts)
+        }        
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
@@ -235,12 +229,18 @@ export async function login(){
             //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
             // await createProfileCard()
         };
+
         const userData = await mapUserData(data.data)
-        console.log(userData)
         localStorage.setItem("userId", userData.id)
         //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
         localStorage.setItem("data", JSON.stringify(userData))
-        createUpdateProfileCard(userData)
+        const posts = await fetchPosts()
+        posts.forEach(post =>{
+            const mappedPost = mapPostData(post)
+            console.log(mappedPost)
+            addPostBox(mappedPost)
+        })
+        // createUpdateProfileCard(userData)
         
     } catch (error) {
         console.error("Error: Cannot get the data")

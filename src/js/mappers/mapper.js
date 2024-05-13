@@ -12,3 +12,16 @@ export function mapUserData(data){
         privacy: data.privacy ?? defaultValue
     }
 }
+
+export function mapPostData(data){
+    const defaultValue = "No disponible"
+    return  {
+        id: data.userId ?? defaultValue,
+        post: data.post ?? defaultValue,
+        postName: data.postName ?? defaultValue, 
+        userPoster: data.userPoster ?? defaultValue,
+        date: data.date ?? defaultValue,    
+        description: data.description ?? defaultValue, 
+        comments: data.comments ?? defaultValue
+    }
+}

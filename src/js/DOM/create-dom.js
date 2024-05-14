@@ -1,9 +1,4 @@
-<<<<<<< jose/feature/#FSN-11_Buscar-Productos
-import { popUpWindow } from "./utils-dom";
-import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './utils-dom';
-import { mapUserData } from "../mappers/mapper";
-=======
-import { loginOrSignUp } from "./utils-dom";
+import { loginOrSignUp, popUpWindow } from "./utils-dom";
 import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
 import { getUserDetails } from "../api/apiConnectionBack";
 import { imgAndName,
@@ -17,8 +12,10 @@ import { imgAndName,
     editProfile, 
     createHeader } from "./profileHTMLElemens";
 import { addPostBox } from "./homeHTMLElements";
+import { mapUserData } from "../mappers/mapper";
 
->>>>>>> develop
+
+
 
 export function createHomePage(){
     createHeader(value)
@@ -124,7 +121,6 @@ export function createSignUp(){
     <p>Ya tiene una cuenta <a class="sign-in">Accede aquí</a></p>
 </form>`
 listenerForSignUp()
-<<<<<<< jose/feature/#FSN-11_Buscar-Productos
 }
 
 function addPostBox(){
@@ -218,7 +214,4 @@ export function createCardUser(userData){
 
     appElem.innerHTML = content;
 
-
-=======
->>>>>>> develop
 }

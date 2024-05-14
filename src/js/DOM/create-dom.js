@@ -1,6 +1,5 @@
 import { loginOrSignUp } from "./utils-dom";
 import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
-import { getUserDetails } from "../api/apiConnectionBack";
 import { imgAndName,
     imgAndNameUpdated, 
     description, 

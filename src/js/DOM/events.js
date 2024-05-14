@@ -1,7 +1,7 @@
-import { addNewComment, fetchPosts, getUserDetails, login, signUp, updateProfileData } from "../api/apiConnectionBack"
+import { addNewComment, fetchPosts, getPostById } from "../api/posts/fetchPosts"
+import {getUserDetails, login, signUp, updateProfileData, userData} from "../api/users/fetchUsers"
 import { createUpdateProfileCard } from "./create-dom"
-import { userData } from "../api/apiConnectionBack"
-import { addCommentField, addPostBox } from "./homeHTMLElements"
+import { addCommentField, addPostBox, addPreviousComments } from "./homeHTMLElements"
 import { mapPostData } from "../mappers/mapper"
 
 export function listenerForLogin(){
@@ -67,10 +67,10 @@ export function listenerForEditProfile(){
 }
 
 export function listenerForAddCommentsField(){
-    const cmntElem = document.getElementById("comments")
-    cmntElem.addEventListener("click", (e)=>{
+    const cmntElem = document.getElementById("add")
+    cmntElem.addEventListener("click", async (e)=>{
         const clickElem = e.target
-        const idElem = clickElem.getAttribute("id-post")
+        const idElem = clickElem.getAttribute("id-add-post")
         console.log(idElem)
         addCommentField(idElem)
     })
@@ -78,12 +78,29 @@ export function listenerForAddCommentsField(){
 
 export function listenerForAddComments(){
     const formElem = document.getElementById("comment-form")
-    formElem.addEventListener("submit", (event)=>{
+    formElem.addEventListener("submit", async (event)=>{
         event.preventDefault()
         addNewComment()
+        const posts = await fetchPosts()
+            console.log(posts)
+            posts.forEach(post =>{
+                const mappedPost = mapPostData(post)
+                addPostBox(mappedPost)
+        })
 
         //ME HE QUEDADO AQUI, QUITANDO QUE CADA VEZ QUE ENVIE EL COMENTARIO SE ME REINICIE LA PAGINA. 
     })
 }
 
+export function listenerForSeeComments(){
+    const formElem = document.getElementById("comments")
+    formElem.addEventListener("click", async (e) =>{
+        const clickElem = e.target
+        const idElem = clickElem.getAttribute("id-add-post")
+        const data = await getPostById()
+        const mappedData = mapPostData(data)
+        const comments = mappedData.comments
+        comments.forEach(comment => addPreviousComments(comment))
+    })
+}
 

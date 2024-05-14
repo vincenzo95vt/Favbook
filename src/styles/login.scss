@@ -1,41 +1,57 @@
 @use "./basics.scss";
-
-.ppal-box-login {
-    width: 900px;
-    height: 750px;
+main {
+  #app {
+    width: 100%;
+    height: 100vh;
     margin-inline: auto;
-    box-shadow: 0 2px 24px -2px rgba(0, 0, 0, 0.14);
     margin-block: 20px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    background-color: basics.$primary-color;
     border-radius: 10px;
-    .login-box {
-        margin-inline: auto;
-        .login-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .controllers {
-            gap: 5px;
+    justify-content: center;
+    #login-box {
+      width: 500px;
+      height: 250px;
+      align-self: center;
+      border-radius: 45px;
+      box-shadow:0 2px 24px -2px rgba(0, 0, 0, 0.34);;
+      backdrop-filter: blur(200px);
+      padding: 40px;
+      margin-inline: auto;
+
+      .login-title {
+        text-align: center;
+        justify-content: center;
+        margin-bottom: 40px;
+      }
+      #controllers {
+        .info-container {
+          display: flex;
+          justify-content: space-between;
+          gap: 5px;
+          margin-bottom: 15px;
+          input {
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid;
+          }
         }
         .login-button {
-            display: flex;
-            justify-content: center;
-            .sumbit-button {
-                margin-block: 20px;
-                text-align: center;
-                border-radius: 50px;
-            }
+          display: flex;
+
+          .sumbit-button {
+            margin-block: 20px;
+            border-radius: 50px;
+          }
         }
-        .lost-password {
-            p {
-                text-align: center;
-            }
+      }
+      .lost-password {
+        font-weight: bold;
+        p {
+          text-align: center;
         }
-         .lost-password{
-             font-weight: bold;
-            
-         }
+      }
     }
+  }
 }

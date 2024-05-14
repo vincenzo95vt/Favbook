@@ -1,51 +1,68 @@
+<<<<<<< jose/feature/#FSN-11_Buscar-Productos
 import { popUpWindow } from "./utils-dom";
 import { listenerForLogin, listenerForSignUp, loginOrSignUp } from './utils-dom';
 import { mapUserData } from "../mappers/mapper";
+=======
+import { loginOrSignUp } from "./utils-dom";
+import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
+import { getUserDetails } from "../api/apiConnectionBack";
+import { imgAndName,
+    imgAndNameUpdated, 
+    description, 
+    descriptionUpdated, 
+    nameAndLastName, 
+    nameAndLastNameUpdated, 
+    submitBtn, 
+    goToProfileSubmit,
+    editProfile, 
+    createHeader } from "./profileHTMLElemens";
+import { addPostBox } from "./homeHTMLElements";
 
-export function createProfileCard(value){
+>>>>>>> develop
+
+export function createHomePage(){
+    createHeader(value)
+    addPostBox(value)
+}
+
+export function createUpdateProfileCard(value){
+    createHeader(value)
     const appElem = document.getElementById("app")
     appElem.innerHTML = ""
-    const divElem = document.createElement("div")
+    const elemContainer = document.createElement("div")
+    appElem.appendChild(elemContainer)
+    elemContainer.className = "container-info-updating"
+    const divElem = document.createElement("form")
+    elemContainer.appendChild(divElem)
+    divElem.id = "update-user"
     divElem.className = "profile-container"
+    const submitContainer = document.createElement("div")
+    submitContainer.className = "submit-container"
     divElem.appendChild(imgAndName(value))
     divElem.appendChild(nameAndLastName(value))
     divElem.appendChild(description(value))
-    appElem.appendChild(divElem)
+    submitContainer.appendChild(submitBtn())
+    submitContainer.appendChild(goToProfileSubmit())
+    divElem.appendChild(submitContainer)
+    listenerForUpdateProfile()
+    listenerForGetUserProfile()
     return divElem
 }
-function description(value){
-    const descriptionElem = document.createElement("div")
-    const description = document.createElement("p")
-    description.innerHTML = value.description
-    descriptionElem.appendChild(description)
-    descriptionElem.className = "description-container"
-    return descriptionElem
+export function createProfileCard(value){
+    
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    const divElem = document.createElement("div")
+    divElem.id = "profile-userdata"
+    divElem.className = "profile-container"
+    divElem.append(editProfile(value))
+    divElem.appendChild(imgAndNameUpdated(value))
+    divElem.appendChild(nameAndLastNameUpdated(value))
+    divElem.appendChild(descriptionUpdated(value))
+    appElem.appendChild(divElem)
+    listenerForEditProfile()
+    return divElem
 }
-
-function nameAndLastName(value){
-    const nameElem = document.createElement("h4")
-    nameElem.innerHTML = value.name
-    const lastNameElem = document.createElement("h4")
-    lastNameElem.innerHTML = value.lastName
-    const nameAndLastName = document.createElement("div")
-    nameAndLastName.className = "name-container"
-    nameAndLastName.appendChild(nameElem)
-    nameAndLastName.appendChild(lastNameElem)
-    return nameAndLastName
-}
-
-function imgAndName(value){
-    const imgAndName = document.createElement("div")
-    const imgProfile = document.createElement("img")
-    imgProfile.src= value.imgProfile
-    const userNameProfile = document.createElement("h3")
-    userNameProfile.innerHTML = value.userName
-    imgAndName.appendChild(imgProfile)
-    imgAndName.appendChild(userNameProfile)
-    imgAndName.className = "img-username-container"
-    return imgAndName
-}
-
 
 export function createLogin(){
     loginOrSignUp()
@@ -53,15 +70,15 @@ export function createLogin(){
     appElem.innerHTML = `
     <div id="login-box">
     <h2 class="login-title">Iniciar sesión</h2>
-    <div class="controllers-container">
         <form id="controllers" action="">
-            <input id="email" type="email" name="user" placeholder="Correo Electrónico">
-            <input id="password" type="password" name="password" placeholder="Contraseña">
+            <div class= "info-container">
+                <input id="email" type="email" name="user" placeholder="Correo Electrónico">
+                <input id="password" type="password" name="password" placeholder="Contraseña">
+            </div>
             <div class="login-button">
-            <button class="submit-button" type="submit">Confirmar</button>
+                <button class="submit-button" type="submit">Confirmar</button>
             </div>
         </form>
-    </div>
     <a class="not-user">¿No estas registrado?</a>`
     listenerForLogin()
 }
@@ -107,6 +124,7 @@ export function createSignUp(){
     <p>Ya tiene una cuenta <a class="sign-in">Accede aquí</a></p>
 </form>`
 listenerForSignUp()
+<<<<<<< jose/feature/#FSN-11_Buscar-Productos
 }
 
 function addPostBox(){
@@ -201,4 +219,6 @@ export function createCardUser(userData){
     appElem.innerHTML = content;
 
 
+=======
+>>>>>>> develop
 }

@@ -1,7 +1,6 @@
 
-import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp, createHomePage, createCardUser } from "../DOM/create-dom";
+import { createLogin, createProfileCard, createSignUp, createHomePage, createCardUser } from "../DOM/create-dom";
 import { addPostBox } from "../DOM/homeHTMLElements";
-import { createHeader } from "../DOM/profileHTMLElemens";
 import { changePrivacy } from "../DOM/utils-dom";
 import { mapPostData, mapUserData } from "../mappers/mapper";
 
@@ -231,7 +230,7 @@ export async function login(){
             // await createProfileCard()
         };
 
-        const userData = await mapUserData(data.data)
+        const userData = mapUserData(data.data)
         localStorage.setItem("userId", userData.id)
         //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
         localStorage.setItem("data", JSON.stringify(userData))

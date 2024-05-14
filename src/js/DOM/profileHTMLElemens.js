@@ -1,3 +1,4 @@
+import { searchutil } from "./utils-dom"
 
 export function description(){
     const descriptionElem = document.createElement("div")
@@ -153,14 +154,15 @@ export function createHeader(value){
         <li class="main-menu-text"><a href="">Publicaciones</a></li>
         <li class="main-menu-text"><a href="#">Favoritos</a></li>
     </ul>
-    <form class="search-bar" role="search">
-        <input class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
-        <button class="search-button" type="submit">Buscar</button>
+    <form id="form-search" class="search-bar" role="search">
+        <input id="valueSearch" class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
+        <button id="valueButton "class="search-button" type="submit">Buscar</button>
     </form>
     <ul class="main-menu">
         <li class="main-menu-text"><a href=""></a>${value.userName}</li>
-        <li id= "app-profile" class="main-menu-img"><a href=""><img src=${value.imgProfile} alt="Foto del usuario"></a></li>
+        <li class="main-menu-img"><a href=""><img src=${value.imgProfile} alt="Foto del usuario"></a></li>
     </ul>
 </div>
     `
+    searchutil()
 }

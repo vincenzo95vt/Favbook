@@ -1,28 +1,29 @@
-import { loginOrSignUp, popUpWindow } from "./utils-dom";
+import { loginOrSignUp } from "./utils-dom";
 import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
 import { getUserDetails } from "../api/apiConnectionBack";
-import { imgAndName,
-    imgAndNameUpdated, 
-    description, 
-    descriptionUpdated, 
-    nameAndLastName, 
-    nameAndLastNameUpdated, 
-    submitBtn, 
+import {
+    imgAndName,
+    imgAndNameUpdated,
+    description,
+    descriptionUpdated,
+    nameAndLastName,
+    nameAndLastNameUpdated,
+    submitBtn,
     goToProfileSubmit,
-    editProfile, 
-    createHeader } from "./profileHTMLElemens";
-import { addPostBox } from "./homeHTMLElements";
+    editProfile,
+    createHeader
+} from "./profileHTMLElemens";
 import { mapUserData } from "../mappers/mapper";
 
 
 
 
-export function createHomePage(){
+export function createHomePage() {
     createHeader(value)
     addPostBox(value)
 }
 
-export function createUpdateProfileCard(value){
+export function createUpdateProfileCard(value) {
     createHeader(value)
     const appElem = document.getElementById("app")
     appElem.innerHTML = ""
@@ -45,8 +46,8 @@ export function createUpdateProfileCard(value){
     listenerForGetUserProfile()
     return divElem
 }
-export function createProfileCard(value){
-    
+export function createProfileCard(value) {
+
     const appElem = document.getElementById("app")
     appElem.innerHTML = ""
     const divElem = document.createElement("div")
@@ -61,7 +62,7 @@ export function createProfileCard(value){
     return divElem
 }
 
-export function createLogin(){
+export function createLogin() {
     loginOrSignUp()
     const appElem = document.getElementById("app")
     appElem.innerHTML = `
@@ -80,7 +81,7 @@ export function createLogin(){
     listenerForLogin()
 }
 
-export function createSignUp(){
+export function createSignUp() {
     const appElem = document.getElementById("app")
     appElem.innerHTML = `
     <form id="signup-card" action="">
@@ -120,28 +121,22 @@ export function createSignUp(){
     </div>
     <p>Ya tiene una cuenta <a class="sign-in">Accede aquí</a></p>
 </form>`
-listenerForSignUp()
+    listenerForSignUp()
 }
 
-function addPostBox(){
-    const divApp =  document.getElementById('app');
-    const  newDiv = document.createElement("div");
-    divApp.appendChild(newDiv)
-    divApp.appendChild(addProfileData())
-    divApp.appendChild(addImgPost())
-}
 
-function addProfileData(value){
-    const newDiv = document.createElement("div")
-    const otherDiv = document.createElement("div")
-    const newH2 = document.createElement("h2")
-    newH2.className = "profile-username"
-    newH2.innerHTML = `${value}` //Aqui iria el nombre de usuario que nos traeremos de la api nuestra.
-    otherDiv.appendChild(newH2)
-    otherDiv.appendChild(popUpWindow())
-    newDiv.appendChild(profileImg())
-    newDiv.appendChild(otherDiv)
-}
+
+// function addProfileData(value) {
+//     const newDiv = document.createElement("div")
+//     const otherDiv = document.createElement("div")
+//     const newH2 = document.createElement("h2")
+//     newH2.className = "profile-username"
+//     newH2.innerHTML = `${value}` //Aqui iria el nombre de usuario que nos traeremos de la api nuestra.
+//     otherDiv.appendChild(newH2)
+//     otherDiv.appendChild(popUpWindow())
+//     newDiv.appendChild(profileImg())
+//     newDiv.appendChild(otherDiv)
+// }
 
 function profileImg(value) {
     const newImg = document.createElement("img")
@@ -150,13 +145,13 @@ function profileImg(value) {
     newImg.alt = "Profile Picture"
 }
 
-function addImgPost(value){
+function addImgPost(value) {
     const newImg = document.createElement("img")
-    newImg.className ="post-image";
-    newImg.src= value; //Aqui iria el url que le vamos a pasar por parametros "value"    
+    newImg.className = "post-image";
+    newImg.src = value; //Aqui iria el url que le vamos a pasar por parametros "value"    
 }
 //Funcion para crear la tarjeta del usuario 
-export function createCardUser(userData){
+export function createCardUser(userData) {
     //obtener le elememento del Dom con el id "app"
     const appElem = document.getElementById("app")
     // Varible para almacenar el contenido de la tarjera 
@@ -165,7 +160,7 @@ export function createCardUser(userData){
     //iterar sobre cada objeto de usuario en el array userData
     userData.forEach(user => {
 
-    //Agregar el Html de la tarjeta de usuario al contenido
+        //Agregar el Html de la tarjeta de usuario al contenido
         content += `
             <div class="card-client">
             <div class="user-picture">

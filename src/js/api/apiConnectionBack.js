@@ -1,6 +1,6 @@
 import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp, createHomePage } from "../DOM/create-dom";
 import { addPostBox } from "../DOM/homeHTMLElements";
-import { createHeader } from "../DOM/profileHTMLElemens";
+import { getSearchUrl, fetchMethods } from "./apiFunctions";
 import { changePrivacy } from "../DOM/utils-dom";
 import { mapPostData, mapUserData } from "../mappers/mapper";
 
@@ -36,22 +36,15 @@ export async function updateProfileData(){
         }if(privacyValue.trim() !== ""){
             requestBody.privacy = privacyValue
         }
-
+        
         const token = localStorage.getItem("token")
         console.log(token)
-        if(!token){
-            throw new Error("Token not found")
-        }
+        if(!token) throw new Error("Token not found")
 
-        const response = await fetch(`http://localhost:4000/user/updateUserDetails`,{
-            method: "PATCH",
-            headers:{
-                "auth-token": token,
-                "Content-type":"application/json"
-            },
-            body: JSON.stringify(requestBody)
-        });
-
+        const url = getSearchUrl("user", "updateUserDetails")
+        const methods = fetchMethods("PATCH", {"auth-token": token, "Content-type":"application/json"}, requestBody)
+        const response = await fetch(url, methods);
+        console.log(response)
         const data = await response.json()
         if(data.status === 401){
             alert("You are logged out due to inactivity.")
@@ -205,14 +198,11 @@ export async function login(){
     const emailValue = emailInput.value
     const passwordValue = passwordInput.value
 
-    try {
-        const response = await fetch("http://localhost:4000/user/login", {
-            method: "POST", 
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({email: emailValue, password: passwordValue}),
-        });
+    try { 
+        
+        const url = getSearchUrl("user", "login")
+        const methods = fetchMethods("POST", {"Content-type":"application/json"}, {email: emailValue, password: passwordValue})
+        const response = await fetch(url, methods);
         const data = await response.json();
         console.log(data)
         //Comprobamos errores
@@ -237,7 +227,6 @@ export async function login(){
         const posts = await fetchPosts()
         posts.forEach(post =>{
             const mappedPost = mapPostData(post)
-            console.log(mappedPost)
             addPostBox(mappedPost)
         })
         // createUpdateProfileCard(userData)
@@ -251,3 +240,41 @@ export async function login(){
     
 }
 
+
+export async function addNewComment(){
+    const commentElem = document.getElementById("comment")
+    const commentValue = commentElem.value
+    const idPost = commentElem.getAttribute("id-post")
+
+    const token = localStorage.getItem("token")
+
+    const requestBody = {}
+    requestBody.comment = commentValue
+
+    try {
+        const response = await fetch(`http://localhost:4000/posts/addNewReview/${idPost}`,{
+            method: "POST",
+            headers: {
+                "auth-token": token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+        const data = await response.json()
+        if(data.status === 400){
+            alert(data.message)
+        }else if(data.status === 404){
+            throw new Error('Something went wrong')
+        }else if(data.status === 200){
+            const posts = await fetchPosts()
+            posts.forEach(post =>{
+                const mappedPost = mapPostData(post)
+                addPostBox(mappedPost)
+        })
+        }
+
+    } catch (error) {
+        console.error("Error: Cannot add the data")
+
+    }
+}

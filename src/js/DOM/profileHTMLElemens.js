@@ -1,3 +1,4 @@
+import { listenerForGetPosts, listenerToSeeProfile } from "./events"
 
 export function description(){
     const descriptionElem = document.createElement("div")
@@ -150,8 +151,8 @@ export function createHeader(value){
     <div class="ppal-navbar">
     <ul class="main-menu">
         <li class="main-menu-img"><a href=""><img src="https://cdn-icons-png.flaticon.com/512/25/25698.png" alt="Logo de la empresa"></a></li>
-        <li class="main-menu-text"><a href="">Publicaciones</a></li>
-        <li class="main-menu-text"><a href="#">Favoritos</a></li>
+        <li class="main-menu-text"><a id="app-posts">Publicaciones</a></li>
+        <li class="main-menu-text"><a>Favoritos</a></li>
     </ul>
     <form class="search-bar" role="search">
         <input class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
@@ -159,8 +160,10 @@ export function createHeader(value){
     </form>
     <ul class="main-menu">
         <li class="main-menu-text"><a href=""></a>${value.userName}</li>
-        <li id= "app-profile" class="main-menu-img"><a href=""><img src=${value.imgProfile} alt="Foto del usuario"></a></li>
+        <li class="main-menu-img"><a  id="app-profile"><img  src=${value.imgProfile} alt="Foto del usuario"></a></li>
     </ul>
 </div>
     `
+    listenerForGetPosts()
+    listenerToSeeProfile()
 }

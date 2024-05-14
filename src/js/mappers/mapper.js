@@ -16,7 +16,7 @@ export function mapUserData(data){
 export function mapPostData(data){
     const defaultValue = "No disponible"
     return  {
-        id: data.userId ?? defaultValue,
+        id: data._id ?? defaultValue,
         post: data.post ?? defaultValue,
         postName: data.postName ?? defaultValue, 
         userPoster: data.userPoster ?? defaultValue,

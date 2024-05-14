@@ -3,6 +3,7 @@
 @use "./header.scss";
 @use "./login.scss";
 @use "./singup.scss";
+@use "./postCard.scss";
 @use "./updateProfile.scss";
 @use "./profileUser.scss";
 li {
@@ -45,6 +46,11 @@ body{
     border-radius: 10px;
     color: #fff;
     font-size: 16px;
+  }
+  svg{
+    width: 7%;
+    height: auto;
+    color: basics.$secondary-color;
   }
 }
 

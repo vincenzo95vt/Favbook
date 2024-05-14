@@ -1,0 +1,30 @@
+#app{
+    #postCard{
+        width: 100%;
+        box-shadow:0 2px 24px -2px rgba(0, 0, 0, 0.34);
+        border-radius: 45px;
+        padding: 5%;
+        h2{
+            text-align: center;
+        }
+        .img-and-info{
+            display: flex;
+            flex-direction: column;
+            .container-date-comments{
+                display: flex;
+                justify-content: space-between;
+            }
+            #comments{
+                width: 5%;
+                transition: 0.5s;
+                &:hover{
+                    cursor: pointer;
+                    width: 5.5%;
+                }   
+            }
+        }
+    }
+}
+#comment{
+    width: 100%;
+}

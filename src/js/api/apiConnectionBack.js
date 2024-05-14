@@ -1,4 +1,5 @@
-import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp, createHomePage } from "../DOM/create-dom";
+
+import { createLogin, createUpdateProfileCard, createProfileCard, createSignUp, createHomePage, createCardUser } from "../DOM/create-dom";
 import { addPostBox } from "../DOM/homeHTMLElements";
 import { createHeader } from "../DOM/profileHTMLElemens";
 import { changePrivacy } from "../DOM/utils-dom";
@@ -251,3 +252,62 @@ export async function login(){
     
 }
 
+export async function searchApi(){
+
+    // Obtener el valor de búsqueda del input
+    const searchInput = document.getElementById("valueSearch");
+    const searchValue = searchInput.value;
+    console.log(searchValue);
+
+    try {
+        // BUSCAR USUARIOS
+        const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const userData = await userResponse.json();
+
+        // Verificar si no se encontraron usuarios
+        if (userData.length === 0) {
+            // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
+            res.status(200).json({
+                status: "success",
+                message: "Not users found"
+            });
+        } else {
+            // Mapear los datos de usuario
+            const data = mapUserData(userData);
+            // Crear tarjeta de usuario
+            createCardUser(userData.data);
+        }
+
+        // BUSCAR PRODUCTOS
+        const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const productoData = await productsResponse.json();
+
+        // Verificar si no se encontraron productos
+        if (productoData.length === 0) {
+            // Enviar respuesta con mensaje de éxito y sin productos encontrados
+            res.status(200).json({
+                status: "success",
+                message: "Not users found"
+            });
+        }
+
+        // Mapear los datos de producto
+        const dataProducts  = mapUserData(productoData);
+
+    } catch (error) {
+        // Capturar y manejar errores
+        console.log("Error al realizar la búsqueda", error.message);
+    }
+
+};

@@ -1,5 +1,6 @@
 import { login, signUp } from "../api/apiConnectionBack"
-import {createSignUp, createLogin} from "../DOM/create-dom"
+import {createSignUp, createLogin, createCardUser,} from "../DOM/create-dom"
+import { searchApi } from "../api/apiConnectionBack"
 
 export function loginOrSignUp(){
     const appElem = document.getElementById("app")
@@ -30,4 +31,25 @@ export function loginOrSignUp(){
 export function changePrivacy(value){
     if(value === "Privado") return "private"
     return "public"
+}
+export function listenerForSignUp(){
+    const signUpElem = document.getElementById("signup-card")
+    signUpElem.addEventListener("submit", (event) => {
+        event.preventDefault()
+        console.log("he entrado")
+        signUp()
+    })
+}
+
+
+export function searchutil(){
+    const searchElemtn = document.getElementById("valueButton")
+     searchElemtn.addEventListener("click", (event) => {
+        event.preventDefault()
+        searchApi();
+        // createCardUser();
+       
+    })
+
+    
 }

@@ -1,13 +1,78 @@
-import { createLogin, createSignUp } from "../DOM/create-dom";
+
+import { createLogin, createProfileCard, createSignUp, createHomePage, createCardUser } from "../DOM/create-dom";
+import { addPostBox } from "../DOM/homeHTMLElements";
+import { changePrivacy } from "../DOM/utils-dom";
+import { mapPostData, mapUserData } from "../mappers/mapper";
+
+//El UserData guardado en el login, lo recogemos para convertirlo en una constante global y asi poder manejar mejor el DOM.
+
+const stringedData = localStorage.getItem("data")
+export const userData = JSON.parse(stringedData)
+
+export async function updateProfileData(){
+    try {
+        const userName = document.getElementById("update-userName")
+        const name = document.getElementById("update-name")
+        const lastName = document.getElementById("update-last-name")
+        const description = document.getElementById("update-description")
+        const privacy = document.getElementById("privacy")
 
 
-async function fetchPosts(){
+        const userNameValue = userName.value
+        const nameValue = name.value
+        const lastNameValue = lastName.value
+        const descriptionValue = description.value
+        const privacyValue = changePrivacy(privacy.value)
+
+        const requestBody = {};
+        if(userNameValue.trim() !== ""){
+            requestBody.userName = userNameValue
+        }if(nameValue.trim() !== ""){
+            requestBody.name = nameValue
+        }if(lastNameValue.trim() !== ""){
+            requestBody.lastName = lastNameValue
+        }if(descriptionValue.trim() !== ""){
+            requestBody.description = descriptionValue
+        }if(privacyValue.trim() !== ""){
+            requestBody.privacy = privacyValue
+        }
+
+        const token = localStorage.getItem("token")
+        console.log(token)
+        if(!token){
+            throw new Error("Token not found")
+        }
+
+        const response = await fetch(`http://localhost:4000/user/updateUserDetails`,{
+            method: "PATCH",
+            headers:{
+                "auth-token": token,
+                "Content-type":"application/json"
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        const data = await response.json()
+        if(data.status === 401){
+            alert("You are logged out due to inactivity.")
+        }
+        else{
+            getUserDetails()
+        }
+
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
+}
+
+
+export async function fetchPosts(){
     try {
         const token = localStorage.getItem("token")
         if(!token){
             throw new Error("Token not found");
         }
-        const response = await fetch("http://localhost:4000/posts", {
+        const response = await fetch("http://localhost:4000/posts/", {
             headers: {
                 "auth-token": token
             },
@@ -15,8 +80,8 @@ async function fetchPosts(){
 
         if(response.status === 200){
             const data = await response.json()
-            console.log(data)
-            return data.data
+            const posts = data.data
+            return posts;
         }else if(response.status === 400) {
             //Token caducado, llamar a refreshToken en caso de no haberse ejecutado. 
 
@@ -24,23 +89,15 @@ async function fetchPosts(){
 
         }else{
             throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
-        console.log(data) //Vamos a ver que nos devuelve para manejar los datos a nuestra manera.
-
-        const posts = data.data;
-        return posts
+        }        
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
 }
 
-//Hay que hacer otros endpoints, los de registrar usuario y publicaciones.
 
 export async function signUp() {
     try {
-        console.log("he entrado")
         const name = document.getElementById("name")
         const lastName = document.getElementById("last-name")
         const age = document.getElementById("age")
@@ -52,7 +109,6 @@ export async function signUp() {
 
         const nameValue = name.value
         const lastNameValue = lastName.value
-        console.log(nameValue)
         const userNameValue = userName.value
         const ageValue = age.value
         const genreValue = genre.value
@@ -64,25 +120,25 @@ export async function signUp() {
             alert("Las contraseñas escritas no son iguales.")
             createSignUp()
         }
+        const requestedBody = {
+            name: nameValue,
+            lastName: lastNameValue,
+            userName: userNameValue,
+            age: ageValue,
+            email: emailValue, 
+            password: confPassValue,
+            genre: genreValue
+            }
 
         const response = await fetch("http://localhost:4000/user/signUp", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                name: nameValue,
-                lastName: lastNameValue,
-                userName: userNameValue,
-                age: ageValue,
-                email: emailValue, 
-                password: confPassValue,
-                genre: genreValue
-                }
-            ),
+            body: JSON.stringify(requestedBody),
         })
-        if(response.status === 409) return alert('El nombre de usuario o el correo ya existen')
         const data = await response.json()
+        if(response.status === 409) return alert(data.message)
         //Vamo a comprobar que el usuario no exista ya en la base de datos.
         if(data){
             createLogin()
@@ -107,6 +163,7 @@ async function refreshToken(){
         const newData = await response.json();
 
         if(newData) {
+            
             localStorage.setItem('token', newData.token);
             localStorage.setItem("token_refresh", newData.token_refresh);
         }
@@ -116,6 +173,29 @@ async function refreshToken(){
     }
 }
 
+export async function getUserDetails(){
+    try {
+        
+        const token = localStorage.getItem("token")
+        const response = await fetch("http://localhost:4000/user/profileUser", {
+            method: "GET", 
+            headers: {
+                "auth-token": token,
+            }            
+        });
+        const data = await response.json();
+        console.log(data)
+        //Comprobamos errores
+        if(data.status === 404) return console.error("cannot search the data")
+        const userData = await mapUserData(data.data)
+        createProfileCard(userData)
+    } catch (error) {
+        console.error("Error: Cannot get the data")
+    }
+    window.onload = async () => {
+        await refreshToken()
+    }
+}
 
 export async function login(){
             
@@ -134,19 +214,34 @@ export async function login(){
             body: JSON.stringify({email: emailValue, password: passwordValue}),
         });
         const data = await response.json();
-
+        console.log(data)
         //Comprobamos errores
         if(data.status === "unauthorize"){
             alert(data.message)
             createLogin()
             return
-        }else if(data.message === "success") {
+        }else if(data.status === "success") {
+            //Quitamos token del localstorage si existen.
+            
             //Guardamos el token  en localStorage para futuras peticiones
             localStorage.setItem('token', data.token);
             localStorage.setItem("token_refresh", data.token_refresh);
             //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
+            // await createProfileCard()
         };
-        await fetchPosts()
+
+        const userData = mapUserData(data.data)
+        localStorage.setItem("userId", userData.id)
+        //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
+        localStorage.setItem("data", JSON.stringify(userData))
+        const posts = await fetchPosts()
+        posts.forEach(post =>{
+            const mappedPost = mapPostData(post)
+            console.log(mappedPost)
+            addPostBox(mappedPost)
+        })
+        // createUpdateProfileCard(userData)
+        
     } catch (error) {
         console.error("Error: Cannot get the data")
     }
@@ -155,6 +250,82 @@ export async function login(){
     }
     
 }
+
+export async function createList () {
+    try {
+        const response = await fetch("http://localhost:4000/user/:id", {
+            method: "PATCH", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const data = await response.json();
+        console.log(data);
+        
+    } catch (error) {
+        console.error("Error: Cannot get the data")
+    }
+}
+export async function searchApi(){
+
+    // Obtener el valor de búsqueda del input
+    const searchInput = document.getElementById("valueSearch");
+    const searchValue = searchInput.value;
+    console.log(searchValue);
+
+    try {
+        // BUSCAR USUARIOS
+        const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const userData = await userResponse.json();
+
+        // Verificar si no se encontraron usuarios
+        if (userData.length === 0) {
+            // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
+            res.status(200).json({
+                status: "success",
+                message: "Not users found"
+            });
+        } else {
+            // Mapear los datos de usuario
+            const data = mapUserData(userData);
+            // Crear tarjeta de usuario
+            createCardUser(userData.data);
+        }
+
+        // BUSCAR PRODUCTOS
+        const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const productoData = await productsResponse.json();
+
+        // Verificar si no se encontraron productos
+        if (productoData.length === 0) {
+            // Enviar respuesta con mensaje de éxito y sin productos encontrados
+            res.status(200).json({
+                status: "success",
+                message: "Not users found"
+            });
+        }
+
+        // Mapear los datos de producto
+        const dataProducts  = mapUserData(productoData);
+
+    } catch (error) {
+        // Capturar y manejar errores
+        console.log("Error al realizar la búsqueda", error.message);
+    }
+
+};
 
 export async function createList () {
     try {

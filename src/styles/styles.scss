@@ -1,5 +1,10 @@
 @use "bootstrap";////ERROR CUANDO ENTRA AL  NAVEGADOR ...........
 @use "./basics.scss";
+@use "./header.scss";
+@use "./login.scss";
+@use "./singup.scss";
+@use "./updateProfile.scss";
+@use "./profileUser.scss";
 li {
     list-style: none;
 }
@@ -8,209 +13,21 @@ a {
     color: black;
     text-decoration: none;
 }
-
-header {
-    position: sticky;
-    top: 0px;
-    .ppal-navbar {
-        background-color: basics.$secondary-color;
-        text-align: center;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-block: 10px;
-        padding-inline: 30px;
-        .main-menu {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            .main-menu-img{
-                object-fit: cover;
-                width: 50px;
-                height: 50px;  
-                img{
-                    width: 50px;
-                    height: 50px;
-                }
-            }
-        }
-        .search-bar {
-            .search-input {
-                width: 500px;
-                border-radius: 50px;
-            }
-            .search-button {
-                border-radius: 50px;
-            }
-        }
-    }
-}
-
-.ppal-info {
-    width: 900px;
-    height: 750px;
-    margin-inline: auto;
-    box-shadow: 0 2px 24px -2px rgba(0, 0, 0, 0.14);
-    margin-block: 20px;
-    display: flex;
-    align-items: center;
-    background-color: basics.$primary-color;
-    border-radius: 10px;
-    justify-content: center;
-    .ppal-box-login{
-        display: flex;
-        justify-content: center;
-        .login-box {
-            margin-inline: auto;
-            .login-title {
-                text-align: center;
-                margin-bottom: 40px;
-            }
-            .controllers-container {
-                display: inline-block;
-                .controllers {
-                    gap: 5px;
-                    .login-button {
-                        display: flex;
-                        justify-content: center;
-                        .sumbit-button {
-                            margin-block: 20px;
-                            text-align: center;
-                            border-radius: 50px;
-                        }
-                    }
-                }
-            }
-            .lost-password {
-                font-weight: bold;
-                p {
-                    text-align: center;
-                }
-            }
-        }
-    }
-}
-
-
-.centrado{
-    display:  flex;
-    justify-content: center;
-    align-items: center;
-    
-   }
-   #signup-card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 350px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    position: relative;
+body{
+  font-family: "Radio Canada Big", sans-serif;
+  color: basics.$primary-color;
+  background:linear-gradient(to bottom right, #ff0000, #0000ff);
+  input {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid;
   }
-  
-  .title {
-    font-size: 28px;
-    color: royalblue;
-    font-weight: 600;
-    letter-spacing: -1px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding-left: 30px;
+  textarea{
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid;
   }
-  
-  .title::before,.title::after {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    left: 0px;
-    background-color: royalblue;
-  }
-  
-  .title::before {
-    width: 18px;
-    height: 18px;
-    background-color: royalblue;
-  }
-  
-  .title::after {
-    width: 18px;
-    height: 18px;
-    animation: pulse 1s linear infinite;
-  }
-  
-  .message, .signin {
-    color: rgba(88, 87, 87, 0.822);
-    font-size: 14px;
-  }
-  
-  .signin {
-    text-align: center;
-  }
-  
-  .signin a {
-    color: royalblue;
-  }
-  
-  .signin a:hover {
-    text-decoration: underline royalblue;
-  }
-  .span-userName{
-    top: -30px;
-  }
-  
-  .flex {
-    display: flex;
-    width: 100%;
-    gap: 6px;
-  }
-  
-  #signup-card label {
-    position: relative;
-  }
-  
-  #signup-card label .input {
-    width: 100%;
-    padding: 10px 10px 20px 10px;
-    outline: 0;
-    border: 1px solid rgba(105, 105, 105, 0.397);
-    border-radius: 10px;
-  }
-  
-  #signup-card label .input + span {
-    position: absolute;
-    left: 10px;
-    top: 15px;
-    color: grey;
-    font-size: 0.9em;
-    cursor: text;
-    transition: 0.3s ease;
-  }
-  
-  #signup-card label .input:placeholder-shown + span {
-    top: 15px;
-    font-size: 0.9em;
-  }
-  
-  #signup-card label .input:focus + span,#signup-card label .input:valid + span {
-    top: 30px;
-    font-size: 0.7em;
-    font-weight: 600;
-  }
-  
-  #signup-card label .input:valid + span {
-    color: green;
-  }
-  #select-option{
-    margin-bottom: 12px;
-  }
-  
-  .submit-button {
+  button{
     border: none;
     outline: none;
     background-color: royalblue;
@@ -218,28 +35,21 @@ header {
     border-radius: 10px;
     color: #fff;
     font-size: 16px;
-    transform: .3s ease;
   }
-  
-  .submit:hover {
-    background-color: rgb(56, 90, 194);
+  select{
+    border: none;
+    outline: none;
+    height: auto;
+    background-color: royalblue;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
   }
-  
-  @keyframes pulse {
-    from {
-      transform: scale(0.9);
-      opacity: 1;
-    }
-  
-    to {
-      transform: scale(1.8);
-      opacity: 0;
-    }
-  }
+}
 
 
 footer {
-    background-color: basics.$secondary-color;
     .footer {
         margin-inline: auto;
         max-width: 1600px;
@@ -247,9 +57,6 @@ footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-block: 10px;
-        padding-inline: 30px;
-        background-color: basics.$secondary-color;
         .footer-index {
             display: flex;
             gap: 15px;
@@ -269,4 +76,123 @@ footer {
     }
 }
 
-    
+// carta de clientes cuando buscar por el buscador
+
+.card-client {
+  background: #555;
+  width: 18rem;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 4px solid #fff;
+  box-shadow: 0 6px 10px #212121;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-right: 5px; /* Agregar margen a la derecha de cada tarjeta */
+
+}
+
+.card-client:hover {
+  transform: translateY(-10px);
+}
+
+.user-picture {
+  overflow: hidden;
+  object-fit: cover;
+  width: 5rem;
+  height: 5rem;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.user-picture svg {
+  width: 2.5rem;
+  fill: currentColor;
+}
+
+.name-client {
+  margin: 0;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 18px;
+  
+}
+
+.name-client span {
+  display: block;
+  font-weight: 200;
+  font-size: 16px;
+  word-wrap: break-word; /* Dividir el texto para ajustarlo al ancho */
+}
+
+.social-media:before {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 20px 0;
+  background: #fff;
+}
+
+.social-media a {
+  position: relative;
+  margin-right: 15px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.social-media a:last-child {
+  margin-right: 0;
+}
+
+.social-media a svg {
+  width: 1.1rem;
+  fill: currentColor;
+}
+
+/*-- Tooltip Social Media --*/
+.tooltip-social {
+  background: #262626;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  padding: 0.5rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -90%);
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.tooltip-social:after {
+  content: " ";
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  border: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: transparent;
+  transform: translate(-50%, 100%);
+}
+
+.social-media a .tooltip-social:after {
+  border-top-color: #262626;
+}
+
+.social-media a:hover .tooltip-social {
+  opacity: 1;
+  transform: translate(-50%, -130%);
+}

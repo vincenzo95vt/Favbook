@@ -1,5 +1,5 @@
-import '../styles/styles.scss'; 
-import { listenerForLogin, listenerForSignUp, loginOrSignUp, listenerForCreateList } from './DOM/utils-dom';
-import { createLogin, createSignUp, createListBuilder } from "./DOM/create-dom"
+import '../styles/styles.scss';
+import { createLogin, createSignUp } from "./DOM/create-dom"
+import { searchutil } from './DOM/utils-dom';
 
 createListBuilder()

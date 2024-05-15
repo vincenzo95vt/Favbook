@@ -1,3 +1,4 @@
+import { searchutil } from "./utils-dom"
 import { listenerForGetPosts, listenerToSeeProfile } from "./events"
 
 export function description(){
@@ -154,9 +155,9 @@ export function createHeader(value){
         <li class="main-menu-text"><a id="app-posts">Publicaciones</a></li>
         <li class="main-menu-text"><a>Favoritos</a></li>
     </ul>
-    <form class="search-bar" role="search">
-        <input class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
-        <button class="search-button" type="submit">Buscar</button>
+    <form id="form-search" class="search-bar" role="search">
+        <input id="valueSearch" class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
+        <button id="valueButton "class="search-button" type="submit">Buscar</button>
     </form>
     <ul class="main-menu">
         <li class="main-menu-text"><a href=""></a>${value.userName}</li>
@@ -164,6 +165,7 @@ export function createHeader(value){
     </ul>
 </div>
     `
+    searchutil()
     listenerForGetPosts()
     listenerToSeeProfile()
 }

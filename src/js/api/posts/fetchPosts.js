@@ -70,9 +70,11 @@ export async function getPostById(){
     try {
         const response = await fetch(url, methods);
         const data = await response.json()
+        console.log("entra")
         if(data.status === "Error"){
                 throw new Error('Something went wrong')
         }else if(data.status === "success"){
+            console.log(data.data)
             return data.data
         }
                     

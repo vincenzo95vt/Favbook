@@ -70,6 +70,7 @@ export function listenerForAddCommentsField(){
     const cmntElem = document.getElementById("add")
     cmntElem.addEventListener("click", async (e)=>{
         const clickElem = e.target
+        console.log(clickElem)
         const idElem = clickElem.getAttribute("id-add-post")
         console.log(idElem)
         addCommentField(idElem)
@@ -88,7 +89,6 @@ export function listenerForAddComments(){
                 addPostBox(mappedPost)
         })
 
-        //ME HE QUEDADO AQUI, QUITANDO QUE CADA VEZ QUE ENVIE EL COMENTARIO SE ME REINICIE LA PAGINA. 
     })
 }
 
@@ -96,10 +96,12 @@ export function listenerForSeeComments(){
     const formElem = document.getElementById("comments")
     formElem.addEventListener("click", async (e) =>{
         const clickElem = e.target
-        const idElem = clickElem.getAttribute("id-add-post")
-        const data = await getPostById()
+        const idElem = clickElem.getAttribute("id-post")
+        console.log("entra")
+        const data = await getPostById(idElem)
         const mappedData = mapPostData(data)
         const comments = mappedData.comments
+        console.log(comments)
         comments.forEach(comment => addPreviousComments(comment))
     })
 }

@@ -12,14 +12,10 @@ import {
     editProfile,
     createHeader
 } from "./profileHTMLElemens";
-import { addPostBox } from "./homeHTMLElements";
 
 
 
-export function createHomePage() {
-    createHeader(value)
-    addPostBox(value)
-}
+
 
 export function createUpdateProfileCard(value) {
     createHeader(value)

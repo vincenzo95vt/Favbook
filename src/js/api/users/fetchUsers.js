@@ -3,7 +3,8 @@ import { createProfileCard, createCardUser, createLogin, createSignUp } from "..
 import { addPostBox } from "../../DOM/homeHTMLElements";
 import { mapUserData, mapPostData } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
-import { changePrivacy } from "../../DOM/utils-dom";
+import { addPostsToDOM, changePrivacy } from "../../DOM/utils-dom";
+import { createHeader } from "../../DOM/profileHTMLElemens";
 const stringedData = localStorage.getItem("data")
 export const userData = JSON.parse(stringedData)
 
@@ -63,14 +64,16 @@ export async function login(){
         localStorage.setItem("userId", userData.id)
         //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
         localStorage.setItem("data", JSON.stringify(userData))
-        const posts = await fetchPosts()
-        posts.forEach(post =>{
-            const mappedPost = mapPostData(post)
-            addPostBox(mappedPost)
-        })
+        const dataObject = await fetchPosts()
+        const appElem = document.getElementById("app")
+        dataObject.forEach(post => {
+            appElem.appendChild(addPostBox(post))
+            createHeader(userData)
+            addPostBox(post)
+        });
         
     } catch (error) {
-        console.error("Error: Cannot get the data")
+        console.error("Error: Cannot get the data", error.message)
     }
     window.onload = async () => {
         await refreshToken()

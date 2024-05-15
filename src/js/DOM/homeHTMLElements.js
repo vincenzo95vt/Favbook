@@ -3,11 +3,7 @@ import { userData } from "../api/users/fetchUsers";
 import { listenerForAddComments, listenerForAddCommentsField, listenerForSeeComments } from "./events";
 
 export function addPostBox(value){
-    createHeader(userData)  
     const divElem = document.createElement("div")
-    const appElem = document.getElementById("app")
-    appElem.innerHTML = ""
-    appElem.appendChild(divElem)
     divElem.innerHTML = ` 
         <div id="postCard">
             <h2>${value.userPoster}</h2>
@@ -30,6 +26,7 @@ export function addPostBox(value){
     `    
     listenerForAddCommentsField()
     listenerForSeeComments()
+    return divElem
 }
 
 export function addCommentField(value){

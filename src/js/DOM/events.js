@@ -8,6 +8,7 @@ export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
     loginElem.addEventListener("submit", (event) => {
         event.preventDefault()   
+        console.log(event)
         login()
         
     })
@@ -70,9 +71,7 @@ export function listenerForAddCommentsField(){
     const cmntElem = document.getElementById("add")
     cmntElem.addEventListener("click", async (e)=>{
         const clickElem = e.target
-        console.log(clickElem)
         const idElem = clickElem.getAttribute("id-add-post")
-        console.log(idElem)
         addCommentField(idElem)
     })
 }

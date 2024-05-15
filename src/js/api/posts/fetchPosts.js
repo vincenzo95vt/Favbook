@@ -18,6 +18,7 @@ export async function fetchPosts(){
         if(response.status === 200){
             const data = await response.json()
             const posts = data.data
+            console.log(posts)
             return posts;
         }else if(response.status === 400) {
             //Token caducado, llamar a refreshToken en caso de no haberse ejecutado. 

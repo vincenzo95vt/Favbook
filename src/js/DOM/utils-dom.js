@@ -1,5 +1,9 @@
-import {createSignUp, createLogin, createCardUser,} from "../DOM/create-dom"
+import {createSignUp, createLogin, createCardUser} from "../DOM/create-dom"
+import { fetchPosts } from "../api/posts/fetchPosts"
 import { searchApi } from "../api/users/fetchUsers"
+import { mapPostData } from "../mappers/mapper"
+import { addPostBox } from "./homeHTMLElements"
+import { createHeader } from "./profileHTMLElemens"
 
 export function loginOrSignUp(){
     const appElem = document.getElementById("app")
@@ -31,9 +35,19 @@ export function searchutil(){
      searchElemtn.addEventListener("submit", (event) => {
         event.preventDefault()
         searchApi();
-        // createCardUser();
        
     })
 
     
+}
+
+export async function addPostsToDOM(userData){
+    createHeader(userData)  
+    const appElem = document.getElementById("app")
+    const data = await fetchPosts()
+    data.forEach(post => {
+        const mappedData = mapPostData(post)
+        const createDOM = addPostBox(mappedData)
+        appElem.appendChild(createDOM)
+    })
 }

@@ -1,5 +1,5 @@
 import { fetchMethods, getSearchUrl } from "../apiFunctions";
-import { createProfileCard, createCardUser, createLogin, createSignUp } from "../../DOM/create-dom";
+import { createProfileCard, createCardUser, createLogin, createSignUp, createCardProduct } from "../../DOM/create-dom";
 import { addPostBox } from "../../DOM/homeHTMLElements";
 import { mapUserData, mapPostData } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
@@ -243,10 +243,13 @@ export async function searchApi(){
                 status: "success",
                 message: "Not users found"
             });
+        } else {
+            //Mapear lo datos de producto
+            const product = mapPostData(productoData);
+            //crear tarjeta de usuario
+            createCardProduct(productoData.product);
         }
 
-        // Mapear los datos de producto
-        const dataProducts  = mapUserData(productoData);
 
     } catch (error) {
         // Capturar y manejar errores

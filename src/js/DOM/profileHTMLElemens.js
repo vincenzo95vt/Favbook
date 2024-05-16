@@ -1,4 +1,4 @@
-import { searchutil } from "./utils-dom"
+import { listenerForCreateList2 } from "./listeners"
 
 export function description(){
     const descriptionElem = document.createElement("div")
@@ -152,7 +152,7 @@ export function createHeader(value){
     <ul class="main-menu">
         <li class="main-menu-img"><a href=""><img src="https://cdn-icons-png.flaticon.com/512/25/25698.png" alt="Logo de la empresa"></a></li>
         <li class="main-menu-text"><a href="">Publicaciones</a></li>
-        <li class="main-menu-text"><a href="#">Favoritos</a></li>
+        <li class="main-menu-text"><a id="create-list">Favoritos</a></li>
     </ul>
     <form id="form-search" class="search-bar" role="search">
         <input id="valueSearch" class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
@@ -164,5 +164,5 @@ export function createHeader(value){
     </ul>
 </div>
     `
-    searchutil()
+    listenerForCreateList2()
 }

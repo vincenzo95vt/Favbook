@@ -1,6 +1,7 @@
 
 import { createLogin, createProfileCard, createSignUp, createHomePage, createCardUser } from "../DOM/create-dom";
 import { addPostBox } from "../DOM/homeHTMLElements";
+import { description } from "../DOM/profileHTMLElemens";
 import { changePrivacy } from "../DOM/utils-dom";
 import { mapPostData, mapUserData } from "../mappers/mapper";
 
@@ -243,7 +244,7 @@ export async function login(){
         // createUpdateProfileCard(userData)
         
     } catch (error) {
-        console.error("Error: Cannot get the data")
+        console.error("Error: Cannot get the data", error.message)
     }
     window.onload = async () => {
         await refreshToken()
@@ -251,13 +252,27 @@ export async function login(){
     
 }
 
-export async function createList () {
+export async function createList() {
+    const userId = userData.id;
+    const token = localStorage.getItem("token")
+    console.log(token)
+
+    const name = document.getElementById("name");
+    const nameValue = name.value;
+
+    const description = document.getElementById("description");
+    const descriptionValue = description.value;
+
+
     try {
-        const response = await fetch("http://localhost:4000/user/:id", {
+        const response = await fetch(`http://localhost:4000/user/${userId}`, {
             method: "PATCH", 
             headers: {
                 "Content-Type": "application/json",
+                "auth-token": token,
             },
+            body: JSON.stringify({name: nameValue, description: descriptionValue}),
+
         });
 
         const data = await response.json();
@@ -326,20 +341,3 @@ export async function searchApi(){
     }
 
 };
-
-export async function createList () {
-    try {
-        const response = await fetch("http://localhost:4000/user/:id", {
-            method: "PATCH", 
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        const data = await response.json();
-        console.log(data);
-        
-    } catch (error) {
-        console.error("Error: Cannot get the data")
-    }
-}

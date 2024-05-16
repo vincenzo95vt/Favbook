@@ -1,5 +1,5 @@
 import { createList, getUserDetails, login, signUp, updateProfileData } from "../api/apiConnectionBack"
-import { createUpdateProfileCard } from "./create-dom"
+import { createListBuilder, createUpdateProfileCard } from "./create-dom"
 import { changePrivacy } from "./utils-dom"
 import { userData } from "../api/apiConnectionBack"
 
@@ -55,10 +55,17 @@ export function listenerForOptionsInProfile(){
 }
 
 export function listenerForCreateList(){
-    const createListElem = document.getElementById("create-list")
-    createListElem.addEventListener("submit", (event) => {
-        event.preventDefault()
-        console.log("he entrado lista")
+    const createListElem = document.getElementById("send-list")
+    createListElem.addEventListener("submit", () => {
+        console.log("he entrado lista creada")
         createList();
+    })
+}
+
+export function listenerForCreateList2(){
+    const createList = document.getElementById("create-list");
+    createList.addEventListener("click", () => {
+        console.log("he entrado listas")
+        createListBuilder()
     })
 }

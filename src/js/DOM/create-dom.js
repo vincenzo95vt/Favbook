@@ -214,10 +214,10 @@ export function createCardUser(userData) {
 export function createListBuilder(){
     const appElem = document.getElementById("app")
     appElem.innerHTML = `
-        <form class="lists">
+        <form class="lists" id="send-list">
             <input id="name" type="name" name="user" placeholder="Nombre de la lista">
             <input id="description" type="text" name="description" placeholder="Descripcion">
-            <button id="create-list" type="submit">Crear lista</button>
+            <button type="submit">Crear lista</button>
         </form>`
     listenerForCreateList();
 }

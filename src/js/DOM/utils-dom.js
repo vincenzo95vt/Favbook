@@ -26,6 +26,3 @@ export function listenerForSignUp(){
     })
 }
 
-export function userExists(){
-    
-}

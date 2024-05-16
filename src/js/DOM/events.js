@@ -3,14 +3,17 @@ import {getUserDetails, login, signUp, updateProfileData, userData} from "../api
 import { createUpdateProfileCard } from "./create-dom"
 import { addCommentField, addPostBox, addPreviousComments } from "./homeHTMLElements"
 import { mapPostData } from "../mappers/mapper"
+import { createHeader } from "./profileHTMLElemens"
+
 
 export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
+    console.log("entro")
+    const appElem = document.getElementById("app")
     loginElem.addEventListener("submit", (event) => {
-        event.preventDefault()   
-        console.log(event)
         login()
-        
+        appElem.innerHTML = ""
+        createHeader(userData)
     })
 
 }
@@ -50,7 +53,9 @@ export function listenerForGetUserProfile(){
 
 export function listenerForGetPosts(){
     const appElem = document.getElementById("app-posts")
+    const divElem = document.getElementById("app")
     appElem.addEventListener("click", async ()=> {
+        divElem.innerHTML = ""
         const posts = await fetchPosts()
         posts.forEach(post =>{
             const mappedPost = mapPostData(post)
@@ -72,12 +77,14 @@ export function listenerForAddCommentsField(){
     cmntElem.addEventListener("click", async (e)=>{
         const clickElem = e.target
         const idElem = clickElem.getAttribute("id-add-post")
+        console.log("clicka")
         addCommentField(idElem)
+        
     })
 }
 
 export function listenerForAddComments(){
-    const formElem = document.getElementById("comment-form")
+    const formElem = document.getElementById("add")
     formElem.addEventListener("submit", async (event)=>{
         event.preventDefault()
         addNewComment()
@@ -92,7 +99,7 @@ export function listenerForAddComments(){
 }
 
 export function listenerForSeeComments(){
-    const formElem = document.getElementById("comments")
+    const formElem = document.getElementById("add")
     formElem.addEventListener("click", async (e) =>{
         const clickElem = e.target
         const idElem = clickElem.getAttribute("id-post")
@@ -100,7 +107,6 @@ export function listenerForSeeComments(){
         const data = await getPostById(idElem)
         const mappedData = mapPostData(data)
         const comments = mappedData.comments
-        console.log(comments)
         comments.forEach(comment => addPreviousComments(comment))
     })
 }

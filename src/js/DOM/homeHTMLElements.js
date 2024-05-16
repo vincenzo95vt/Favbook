@@ -1,9 +1,10 @@
-import { createHeader } from "./profileHTMLElemens";
-import { userData } from "../api/users/fetchUsers";
 import { listenerForAddComments, listenerForAddCommentsField, listenerForSeeComments } from "./events";
 
 export function addPostBox(value){
+    const appElem = document.getElementById("app")
     const divElem = document.createElement("div")
+    appElem.appendChild(divElem)
+    const postId = `add-${value.id}`;
     divElem.innerHTML = ` 
         <div id="postCard">
             <h2>${value.userPoster}</h2>
@@ -13,7 +14,7 @@ export function addPostBox(value){
                 <p>${value.description}</p>
                 <div class="container-date-comments">
                     <p>${value.date}</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" id-add-post= "${value.id}" id="add" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="20" height="20">
+                    <svg xmlns="http://www.w3.org/2000/svg" id-add-post="${value.id}" id="add" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="20" height="20">
                     <g>
                         <path d="M480,224H288V32c0-17.673-14.327-32-32-32s-32,14.327-32,32v192H32c-17.673,0-32,14.327-32,32s14.327,32,32,32h192v192   c0,17.673,14.327,32,32,32s32-14.327,32-32V288h192c17.673,0,32-14.327,32-32S497.673,224,480,224z"/>
                     </g>
@@ -26,12 +27,10 @@ export function addPostBox(value){
     `    
     listenerForAddCommentsField()
     listenerForSeeComments()
-    return divElem
 }
 
 export function addCommentField(value){
     const postElem = document.getElementById("postCard")
-    postElem.innerHTML = ""
     postElem.innerHTML = `
     <form id="comment-form">
         <label for="comment">Comentario:</label><br>

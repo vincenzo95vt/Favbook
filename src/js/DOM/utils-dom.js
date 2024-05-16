@@ -35,19 +35,7 @@ export function searchutil(){
      searchElemtn.addEventListener("submit", (event) => {
         event.preventDefault()
         searchApi();
-       
     })
 
     
-}
-
-export async function addPostsToDOM(userData){
-    createHeader(userData)  
-    const appElem = document.getElementById("app")
-    const data = await fetchPosts()
-    data.forEach(post => {
-        const mappedData = mapPostData(post)
-        const createDOM = addPostBox(mappedData)
-        appElem.appendChild(createDOM)
-    })
 }

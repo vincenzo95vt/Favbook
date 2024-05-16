@@ -146,7 +146,7 @@ export function descriptionUpdated(value){
     return descriptionElem
 }
 
-export function createHeader(value){
+export function  createHeader(value){
     const headerElem = document.getElementById("app-header")
     headerElem.innerHTML= ` 
     <div class="ppal-navbar">

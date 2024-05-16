@@ -3,8 +3,8 @@ import { createProfileCard, createCardUser, createLogin, createSignUp } from "..
 import { addPostBox } from "../../DOM/homeHTMLElements";
 import { mapUserData, mapPostData } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
-import { addPostsToDOM, changePrivacy } from "../../DOM/utils-dom";
 import { createHeader } from "../../DOM/profileHTMLElemens";
+
 const stringedData = localStorage.getItem("data")
 export const userData = JSON.parse(stringedData)
 
@@ -34,9 +34,10 @@ export async function login(){
             
     const emailInput = document.getElementById("email")
     const passwordInput = document.getElementById("password")
-    
+    console.log(emailInput)
     const emailValue = emailInput.value
     const passwordValue = passwordInput.value
+    console.log(emailValue)
 
     try { 
         
@@ -44,7 +45,6 @@ export async function login(){
         const methods = fetchMethods("POST", {"Content-type":"application/json"}, {email: emailValue, password: passwordValue})
         const response = await fetch(url, methods);
         const data = await response.json();
-        console.log(data)
         //Comprobamos errores
         if(data.status === "unauthorize"){
             alert(data.message)
@@ -65,10 +65,8 @@ export async function login(){
         //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
         localStorage.setItem("data", JSON.stringify(userData))
         const dataObject = await fetchPosts()
-        const appElem = document.getElementById("app")
         dataObject.forEach(post => {
-            appElem.appendChild(addPostBox(post))
-            createHeader(userData)
+            mapPostData(post)
             addPostBox(post)
         });
         

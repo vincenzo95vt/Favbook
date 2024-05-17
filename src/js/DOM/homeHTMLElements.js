@@ -29,6 +29,7 @@ export function addPostBox(value){
     listenerForSeeComments()
 }
 
+
 export function addCommentField(value){
     const postElem = document.getElementById("postCard")
     postElem.innerHTML = `

@@ -1,5 +1,5 @@
 import { loginOrSignUp } from "./utils-dom";
-import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
+import { listenerForAddComments, listenerForAddCommentsField, listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
 import {
     imgAndName,
     imgAndNameUpdated,
@@ -12,10 +12,20 @@ import {
     editProfile,
     createHeader
 } from "./profileHTMLElemens";
+import { fetchPosts } from "../api/posts/fetchPosts";
+import { addPostBox } from "./homeHTMLElements";
+import { mapPostData } from "../mappers/mapper";
 
 
+export async function createHomePage(value){
+    createHeader(value)
+    const data = await fetchPosts()
+    data.forEach(post =>{
+        const mappedData = mapPostData(post)
+        addPostBox(mappedData)
+    })
 
-
+}
 
 export function createUpdateProfileCard(value) {
     createHeader(value)

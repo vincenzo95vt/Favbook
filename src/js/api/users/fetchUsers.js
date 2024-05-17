@@ -1,9 +1,10 @@
 import { fetchMethods, getSearchUrl } from "../apiFunctions";
-import { createProfileCard, createCardUser, createLogin, createSignUp } from "../../DOM/create-dom";
+import { createProfileCard, createCardUser, createLogin, createSignUp, createHomePage } from "../../DOM/create-dom";
 import { addPostBox } from "../../DOM/homeHTMLElements";
 import { mapUserData, mapPostData } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
 import { createHeader } from "../../DOM/profileHTMLElemens";
+import { changePrivacy } from "../../DOM/utils-dom";
 
 const stringedData = localStorage.getItem("data")
 export const userData = JSON.parse(stringedData)
@@ -64,11 +65,9 @@ export async function login(){
         localStorage.setItem("userId", userData.id)
         //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
         localStorage.setItem("data", JSON.stringify(userData))
-        const dataObject = await fetchPosts()
-        dataObject.forEach(post => {
-            mapPostData(post)
-            addPostBox(post)
-        });
+        const appElem = document.getElementById("app")
+        appElem.innerHTML = ""
+        createHomePage(userData)
         
     } catch (error) {
         console.error("Error: Cannot get the data", error.message)

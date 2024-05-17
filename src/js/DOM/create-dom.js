@@ -1,5 +1,5 @@
 import { loginOrSignUp } from "./utils-dom";
-import { listenerForAddComments, listenerForAddCommentsField, listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
+import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
 import {
     imgAndName,
     imgAndNameUpdated,

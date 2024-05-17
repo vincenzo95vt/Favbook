@@ -33,11 +33,11 @@ export async function fetchPosts(){
     }
 }
 
-export async function addNewComment(){
+export async function addNewComment(value){
     const commentElem = document.getElementById("comment")
     const commentValue = commentElem.value
-    const idPost = commentElem.getAttribute("id-post")
-
+    const idPost = value
+    
     const token = localStorage.getItem("token")
 
     const requestBody = {}

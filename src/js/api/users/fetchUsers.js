@@ -3,8 +3,6 @@ import { createProfileCard, createCardUser, createLogin, createSignUp, createHom
 import { addPostBox } from "../../DOM/homeHTMLElements";
 import { mapUserData, mapPostData } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
-import { createHeader } from "../../DOM/profileHTMLElemens";
-import { changePrivacy } from "../../DOM/utils-dom";
 
 const stringedData = localStorage.getItem("data")
 export const userData = JSON.parse(stringedData)
@@ -46,6 +44,7 @@ export async function login(){
         const methods = fetchMethods("POST", {"Content-type":"application/json"}, {email: emailValue, password: passwordValue})
         const response = await fetch(url, methods);
         const data = await response.json();
+        console.log(data.response)
         //Comprobamos errores
         if(data.status === "unauthorize"){
             alert(data.message)
@@ -57,18 +56,14 @@ export async function login(){
             //Guardamos el token  en localStorage para futuras peticiones
             localStorage.setItem('token', data.token);
             localStorage.setItem("token_refresh", data.token_refresh);
-            //Aqui vamos a poner la ruta para redirigir la pagina hacia otro sitio una vez que el login sea correcto.
-            // await createProfileCard()
+            const userData = await mapUserData(data.data)
+            const mappedUser = mapUserData(userData)
+            //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
+            
+            localStorage.setItem("data", JSON.stringify(userData))
+            createHomePage(mappedUser);
         };
 
-        const userData = await mapUserData(data.data)
-        localStorage.setItem("userId", userData.id)
-        //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
-        localStorage.setItem("data", JSON.stringify(userData))
-        const appElem = document.getElementById("app")
-        appElem.innerHTML = ""
-        createHomePage(userData)
-        
     } catch (error) {
         console.error("Error: Cannot get the data", error.message)
     }

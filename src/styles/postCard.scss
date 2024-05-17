@@ -1,8 +1,6 @@
 #app{
-    height: max-content;
-    #postCard{
+    .postCard{
         width: 50rem;
-        height: 50rem;
         box-shadow: 0 2px 24px -2px rgba(0, 0, 0, 0.34);
         border-radius: 45px;
         padding: 5%;

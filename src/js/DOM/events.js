@@ -72,22 +72,20 @@ export function listenerForEditProfile(){
     })
 }
 
-export function listenerForAddCommentsField(){
-    const cmntElem = document.getElementById("add")
+export function listenerForAddCommentsField(value){
+    const cmntElem = document.getElementById(`add-${value}`)
     cmntElem.addEventListener("click", async (e)=>{
-        const clickElem = e.target
-        const idElem = clickElem.getAttribute("id-add-post")
-        console.log("clicka")
-        addCommentField(idElem)
+        console.log(value)
+        addCommentField(value)
         
     })
 }
 
-export function listenerForAddComments(){
+export function listenerForAddComments(value){
     const formElem = document.getElementById("add")
     formElem.addEventListener("submit", async (event)=>{
         event.preventDefault()
-        addNewComment()
+        addNewComment(value)
         const posts = await fetchPosts()
             console.log(posts)
             posts.forEach(post =>{

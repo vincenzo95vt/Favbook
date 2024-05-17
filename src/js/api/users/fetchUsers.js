@@ -246,11 +246,12 @@ export async function searchApi(){
         } else {
             //Mapear lo datos de producto
             const product = mapPostData(productoData);
-            //crear tarjeta de usuario
-            createCardProduct(productoData.product);
+            //crear tarjeta de producto
+            console.log(productoData)
+            createCardProduct(productoData.data);
         }
 
-
+        
     } catch (error) {
         // Capturar y manejar errores
         console.log("Error al realizar la búsqueda", error.message);
@@ -260,8 +261,120 @@ export async function searchApi(){
 
 
 
+// // Función principal que coordina la búsqueda de usuarios y productos
+// export async function searchApi() {
+//     // Obtener el valor de búsqueda del input
+//     const searchInput = document.getElementById("valueSearch");
+//     const searchValue = searchInput.value;
+//     console.log(searchValue);
+
+//     try {
+//         // Llamar a la función para buscar usuarios
+//         await searchUsers(searchValue);
+//         // Llamar a la función para buscar productos
+//         await searchProducts(searchValue);
+//     } catch (error) {
+//         // Capturar y manejar errores
+//         console.log("Error al realizar la búsqueda", error.message);
+//     }
+// };
 
 
+// // Funcion para buscar usuarios
+// async function searchUsers(searchValue) {
+//     try {
+//         // Hacer una solicitud GET a la API para obtener usuarios que coincidan con el valor de búsqueda
+//         const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         // Convertir la respuesta en un objeto JSON
+//         const userData = await userResponse.json();
+
+//         // Verificar si no se encontraron usuarios
+//         if (userData.length === 0) {
+//             // Logear mensaje de que no se encontraron usuarios
+//             console.log({
+//                 status: "success",
+//                 message: "Not users found"
+//             });
+//         } else {
+//             // Iterar sobre cada usuario y crear una tarjeta para cada uno
+//             userData.forEach(user => {
+//                 // Mapear los datos de usuario
+//                 const data = mapUserData(user);
+//                 // Crear tarjeta de usuario con los datos obtenidos
+//                 createCardUser(data);
+//             });
+//         }
+//     } catch (error) {
+//         // Capturar y manejar errores
+//         console.log("Error al realizar la búsqueda de usuarios", error.message);
+//     }
+// };
 
 
+// // Función para buscar productos basados en el valor de búsqueda
+// async function searchProducts(searchValue) {
+//     try {
+//         // Realizar una solicitud GET para obtener productos
+//         const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         // Convertir la respuesta a formato JSON
+//         const productoData = await productsResponse.json();
+
+//         // Verificar si no se encontraron productos
+//         if (productoData.length === 0) {
+//             // Loggear un mensaje indicando que no se encontraron productos
+//             console.log({
+//                 status: "success",
+//                 message: "No products found"
+//             });
+//         } else {
+//             // Iterar sobre cada producto y crear una tarjeta para cada uno
+//             productoData.forEach(product => {
+//                 // Mapear los datos de producto
+//                 const data = mapPostData(product);
+//                 // Crear una tarjeta de producto con los datos mapeados
+//                 createCardProduct(data);
+//             });
+//         }
+//     } catch (error) {
+//         // Capturar y manejar errores específicos de la búsqueda de productos
+//         console.log("Error al buscar productos", error.message);
+//     }
+// };
+
+
+// // Función para mapear los datos de usuario (ajustar según sea necesario)
+// function mapUserData(userData) {
+//     // Implementa la lógica de mapeo de datos de usuario
+//     return userData;  // Ajustar según sea necesario
+// }
+
+// // Función para crear una tarjeta de usuario (ajustar según sea necesario)
+// function createCardUser(data) {
+//     // Implementa la lógica para crear tarjetas de usuario
+//     console.log("User card created", data);
+// }
+
+// // Función para mapear los datos de productos (ajustar según sea necesario)
+// function mapPostData(productoData) {
+//     // Implementa la lógica de mapeo de datos de productos
+//     return productoData;  // Ajustar según sea necesario
+// }
+
+// // Función para crear una tarjeta de producto (ajustar según sea necesario)
+// function createCardProduct(data) {
+//     // Implementa la lógica para crear tarjetas de producto
+//     console.log("Product card created", data);
+// }
 

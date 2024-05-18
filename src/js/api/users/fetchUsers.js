@@ -61,6 +61,8 @@ export async function login(){
             //Guardamos en LocalStorage userData para recogerlo cuando nos haga falta.
             
             localStorage.setItem("data", JSON.stringify(userData))
+            const appElem = document.getElementById("app")
+            appElem.innerHTML = ""
             createHomePage(mappedUser);
         };
 

@@ -26,3 +26,12 @@ export function mapPostData(data){
         comments: data.comments ?? defaultValue
     }
 }
+export function mapComments(data){
+    const defaultValue = "No disponible"
+    return  {
+        id: data._id ?? defaultValue,
+        usuario: data.usuario ?? defaultValue,
+        content: data.content ?? defaultValue, 
+        date: data.date ?? defaultValue,    
+    }
+}

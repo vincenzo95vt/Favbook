@@ -33,39 +33,43 @@ export async function fetchPosts(){
     }
 }
 
-export async function addNewComment(value){
+export async function addNewComment(id){
     const commentElem = document.getElementById("comment")
     const commentValue = commentElem.value
-    const idPost = value
-    
+    console.log(commentValue)
+    const idPost = id
     const token = localStorage.getItem("token")
 
     const requestBody = {}
     requestBody.comment = commentValue
 
     try {
-        const url = getSearchUrl("posts", "addNewReview", idPost)
-        const methods = fetchMethods("POST", {"Content-type":"application/json","auth-token": token }, requestBody)
-        const response = await fetch(url, methods);
+        const response = await fetch(`http://localhost:4000/posts/addNewReview/${id}`, {
+            method: "POST", 
+            headers: {
+                "auth-token": token
+            },
+            body:requestBody
+        });;
         const data = await response.json()
+        console.log(data)
         if(data.status === 400){
             alert(data.message)
         }else if(data.status === 404){
             throw new Error('Something went wrong')
-        }else if(data.status === 200){
-            console.log(data.message)
-        }
+        }else            
+         console.log(data.message)
+        
 
     } catch (error) {
-        console.error("Error: Cannot add the data")
+        console.error("Error: Cannot add the data", error.message)
 
     }
 }
 
-export async function getPostById(){
+export async function getPostById(value){
     const token = localStorage.getItem("token")
-    const commentElem = document.getElementById("comments")
-    const idPost = commentElem.getAttribute("id-post")
+    const idPost = value
     const url = getSearchUrl("posts", idPost)
     const methods = fetchMethods("GET", {"auth-token": token})
     try {
@@ -74,10 +78,7 @@ export async function getPostById(){
         console.log("entra")
         if(data.status === "Error"){
                 throw new Error('Something went wrong')
-        }else if(data.status === "success"){
-            console.log(data.data)
-            return data.data
-        }
+        }else return data.data
                     
     } catch (error) {
         console.error("Error: Cannot get the data", error.message)

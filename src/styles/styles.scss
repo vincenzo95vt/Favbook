@@ -18,10 +18,9 @@ body{
   font-family: "Radio Canada Big", sans-serif;
   color: basics.$primary-color;
   background:linear-gradient(to bottom right, #ff0000, #0000ff);
-  height: 100%;
   background-repeat: no-repeat;
   main{
-
+    overflow: hidden;
   }
   footer{
     position: fixed;

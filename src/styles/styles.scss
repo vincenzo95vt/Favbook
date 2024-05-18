@@ -206,8 +206,8 @@ footer {
 // Carta de producto cuando buscas por productos 
 
 .card {
-  width: 190px;
-  height: 254px;
+  width: 200px;
+  height: 289px;
   padding: .8em;
   background: #f5f5f5;
   position: relative;
@@ -216,7 +216,7 @@ footer {
  }
  
  .card-img {
-  background-color: #ffcaa6;
+  
   height: 40%;
   width: 100%;
   border-radius: .5rem;
@@ -267,4 +267,7 @@ footer {
   border: 1px solid #ffcaa6;
   background-color: #ffcaa6;
  }
- 
+ .svg-icon {
+  height: 20px;
+  width: 20px;
+ }

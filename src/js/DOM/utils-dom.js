@@ -1,5 +1,5 @@
 import {createSignUp, createLogin, createCardUser,} from "../DOM/create-dom"
-import { searchApi } from "../api/users/fetchUsers"
+import { searchUsers, searchProduct, userData } from "../api/users/fetchUsers"
 
 export function loginOrSignUp(){
     const appElem = document.getElementById("app")
@@ -25,15 +25,13 @@ export function listenerForSignUp(){
     })
 }
 
-
 export function searchutil(){
     const searchElemtn = document.getElementById("form-search")
      searchElemtn.addEventListener("submit", (event) => {
         event.preventDefault()
-        searchApi();
-        // createCardUser();
        
+         searchUsers()
+         searchProduct()
     })
+};
 
-    
-}

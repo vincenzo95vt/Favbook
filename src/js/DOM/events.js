@@ -1,16 +1,16 @@
 import { addNewComment, fetchPosts, getPostById } from "../api/posts/fetchPosts"
-import {getUserDetails, login, signUp, updateProfileData, userData} from "../api/users/fetchUsers"
-import { createUpdateProfileCard } from "./create-dom"
+import { getSearchedUserDetails, getUserDetails, login, signUp, updateProfileData, userData} from "../api/users/fetchUsers"
+import { createProfileCard, createUpdateProfileCard } from "./create-dom"
 import { addPostBox, addPreviousComments } from "./homeHTMLElements"
-import { mapComments, mapPostData } from "../mappers/mapper"
-import { createHeader } from "./profileHTMLElemens"
+import { mapPostData } from "../mappers/mapper"
+import { createCardUserSearched, createHeader } from "./profileHTMLElemens"
 
 
 export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
     console.log("entro")
     const appElem = document.getElementById("app")
-    loginElem.addEventListener("submit", (event) => {
+    loginElem.addEventListener("submit", () => {
         login()
         appElem.innerHTML = ""
         createHeader(userData)
@@ -92,8 +92,9 @@ export function listenerForSeeComments(value){
 
 export function listenerToSeeOtherProfiles(idProfile){
     const idDiv = document.getElementById(`cardClient-${idProfile}`)
-    idDiv.addEventListener("click", ()=>{
-        console.log(idDiv)
+    idDiv.addEventListener("click", async (e)=>{
+        const data = await getSearchedUserDetails(idProfile)
+        createCardUserSearched(data)
     })
 }
 

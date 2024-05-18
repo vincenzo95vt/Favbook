@@ -1,6 +1,5 @@
 import '../styles/styles.scss'; 
 import { createHomePage, createLogin} from "./DOM/create-dom"
-
 const token = localStorage.getItem("token");
 // import { userData } from './api/users/fetchUsers';
 // if(token !== null){

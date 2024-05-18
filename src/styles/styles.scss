@@ -6,6 +6,7 @@
 @use "./postCard.scss";
 @use "./updateProfile.scss";
 @use "./profileUser.scss";
+@use "./userDetails.scss";
 li {
     list-style: none;
 }
@@ -114,6 +115,12 @@ footer {
     cursor: pointer;
   }
 
+}
+.card-client{
+  .candado{
+    width: 80%;
+    height: 80%;
+  }
 }
 
 .card-client:hover {

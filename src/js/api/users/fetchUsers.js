@@ -1,7 +1,6 @@
 import { fetchMethods, getSearchUrl } from "../apiFunctions";
 import { createProfileCard, createCardUser, createLogin, createSignUp, createHomePage } from "../../DOM/create-dom";
-import { addPostBox } from "../../DOM/homeHTMLElements";
-import { mapUserData, mapPostData } from "../../mappers/mapper";
+import { mapUserData, } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
 
 const stringedData = localStorage.getItem("data")
@@ -51,7 +50,6 @@ export async function login(){
             createLogin()
             return
         }else if(data.status === "success") {
-            //Quitamos token del localstorage si existen.
             
             //Guardamos el token  en localStorage para futuras peticiones
             localStorage.setItem('token', data.token);
@@ -74,6 +72,28 @@ export async function login(){
     }
     
 }
+
+// if (errorData.mesagge.inlcude("token invalido")){}
+//           const body = document.querySelector("body");
+//           const sessionExpiredElement = document.createElement("div");
+//           sessionExpiredElement.id = "confirmation";
+//           sessionExpiredElement.innerHTML = `
+//             <p>Su sesion ha caducado. Redirigiendo al login</p>
+//             <img id="logo-confirmation" src="/nexiatransp.png" />
+//           `;
+//           body.appendChild(sessionExpiredElement);
+
+//           setTimeout(() => {
+//             if (sessionExpiredElement) {
+//               sessionExpiredElement.remove();
+//             }
+//             localStorage.clear();
+//             loginPage();
+//           }, 3000);
+//           console.log(error);
+//         }
+//       });
+
 
 export async function refreshToken(){
     try {
@@ -197,7 +217,9 @@ export async function searchApi(){
     // Obtener el valor de búsqueda del input
     const searchInput = document.getElementById("valueSearch");
     const searchValue = searchInput.value;
-    console.log(searchValue);
+    if(searchValue ===""){
+        return alert("Escribe alguna letra sino... poco vamos a encontrar")
+    }
 
     try {
         // BUSCAR USUARIOS
@@ -212,6 +234,7 @@ export async function searchApi(){
         // Verificar si no se encontraron usuarios
         if (userData.length === 0) {
             // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
+            console.log("no hemos encontrado nada")
             res.status(200).json({
                 status: "success",
                 message: "No users found"
@@ -246,10 +269,31 @@ export async function searchApi(){
 
     } catch (error) {
         // Capturar y manejar errores
-        console.log("Error al realizar la búsqueda", error.message);
+        console.error("Error al realizar la búsqueda", error.message);
     }
 
 };
+
+export async function getSearchedUserDetails(idProfile){
+    try {
+        const token = localStorage.getItem("token")
+        const url = getSearchUrl("user", "getUserDetails", idProfile)   
+        const methods = fetchMethods("GET", { "Content-Type": "application/json","auth-token": token})
+        console.log(url,methods)
+        const response = await fetch(url, methods)
+        const userData = await response.json()
+        console.log(userData)
+        if(userData.status === "Error"){
+            console.error("Algo ha ido mal recogiendo los datos")
+        }else{
+            return userData.data
+        }
+
+    } catch (error) {
+         // Capturar y manejar errores
+         console.error("Error al realizar la búsqueda", error.message);
+    }
+}
 
 
 

@@ -1,9 +1,5 @@
 import {createSignUp, createLogin, createCardUser} from "../DOM/create-dom"
-import { fetchPosts } from "../api/posts/fetchPosts"
 import { searchApi } from "../api/users/fetchUsers"
-import { mapPostData } from "../mappers/mapper"
-import { addPostBox } from "./homeHTMLElements"
-import { createHeader } from "./profileHTMLElemens"
 
 export function loginOrSignUp(){
     const appElem = document.getElementById("app")
@@ -24,7 +20,6 @@ export function listenerForSignUp(){
     const signUpElem = document.getElementById("signup-card")
     signUpElem.addEventListener("submit", (event) => {
         event.preventDefault()
-        console.log("he entrado")
         signUp()
     })
 }

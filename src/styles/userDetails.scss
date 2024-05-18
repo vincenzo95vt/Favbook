@@ -1,0 +1,88 @@
+#app{
+    .container-users-details{
+        width: 90%;
+        height: 80%;
+        border: 4px solid #fff;
+        box-shadow: 0 6px 10px #212121;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        .user-img-follows{
+            display: flex;
+            justify-content: space-between;
+            .userImg{
+                width: 20%;
+                margin: 2%;
+            }
+            .following-followers{
+                display:flex ;
+                width: 700px;
+                margin-right: 10%;
+                justify-content: space-between;
+                .followers{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    height: min-content;
+                    span{
+                        font-size: 2em;
+                    }
+                    .count{
+                        font-size: 8em;
+                        text-align: center;
+                        height: min-content;
+                        width:min-content;
+                    }
+                }
+                .following{
+                    display: flex;
+                    flex-direction: column;
+                    width: fit-content;
+                    height: min-content;
+
+                    align-items: center;
+                    span{
+                        font-size: 2em;
+                    }
+                    .count{
+                        font-size: 8em;
+                        text-align: center;
+                        width:min-content;
+                    }
+                }
+            }
+            
+        }
+        .container-personal-info{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .userName{
+                font-size: 4em;
+                margin-left: 20px;
+                
+            }
+            .name-lastName{
+                font-size: 2em
+            }
+            .age{
+                margin-right:20px
+            }
+        }
+        .description-and-name{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+.container-users-details{
+    display: flex;
+    justify-content: center;
+    .candado{
+        width: 100%;
+        height: 80%;
+        color: #fff;
+    }
+}

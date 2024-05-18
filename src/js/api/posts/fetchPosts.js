@@ -65,7 +65,7 @@ export async function addNewComment(id){
 
     } catch (error) {
         console.error("Error: Cannot add the data", error.message)
-
+        
     }
 }
 

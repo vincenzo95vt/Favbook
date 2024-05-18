@@ -5,6 +5,7 @@ export function addPostBox(value){
     
     const appElem = document.getElementById("app")
     const divElem = document.createElement("div")
+    divElem.className = "appDiv"
     appElem.appendChild(divElem)
     divElem.innerHTML = ` 
         <div class="postCard" id="postCard-${value.id}">

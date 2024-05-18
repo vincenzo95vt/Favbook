@@ -48,7 +48,6 @@ export function listenerForGetUserProfile(){
     const profileBtn = document.getElementById("button-go-profile")
     profileBtn.addEventListener("click", ()=>{
         getUserDetails()
-        console.log("He entrado")
     })
 }
 
@@ -73,19 +72,6 @@ export function listenerForEditProfile(){
     })
 }
 
-// export function listenerForAddCommentsField(value){
-//     const cmntElem = document.getElementById(`add-${value}`)
-//     const containerField = document.getElementById(`comment-form-${value}`)
-//     cmntElem.addEventListener("click", async (e)=>{
-//         if(containerField.style.display === "none"){
-//             containerField.style.display = "block"
-//         }
-//             containerField.style.display = "none"
-            
-        
-//     })
-// }
-
 export function listenerForAddComments(value){
     const formElem = document.getElementById(`submit-${value}`)
     formElem.addEventListener("click", ()=>{
@@ -101,6 +87,13 @@ export function listenerForSeeComments(value){
         const data = await getPostById(value)
         const comments = data.comments
         addPreviousComments(comments, value)
+    })
+}
+
+export function listenerToSeeOtherProfiles(idProfile){
+    const idDiv = document.getElementById(`cardClient-${idProfile}`)
+    idDiv.addEventListener("click", ()=>{
+        console.log(idDiv)
     })
 }
 

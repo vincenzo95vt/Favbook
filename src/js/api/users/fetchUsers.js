@@ -214,13 +214,12 @@ export async function searchApi(){
             // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
             res.status(200).json({
                 status: "success",
-                message: "Not users found"
+                message: "No users found"
             });
         } else {
             // Mapear los datos de usuario
-            const data = mapUserData(userData);
             // Crear tarjeta de usuario
-            createCardUser(userData.data);
+                createCardUser(userData.data);
         }
 
         // BUSCAR PRODUCTOS
@@ -238,7 +237,7 @@ export async function searchApi(){
             // Enviar respuesta con mensaje de éxito y sin productos encontrados
             res.status(200).json({
                 status: "success",
-                message: "Not users found"
+                message: "Not posts found"
             });
         }
 

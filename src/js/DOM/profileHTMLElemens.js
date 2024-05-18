@@ -1,4 +1,5 @@
-import { listenerForCreateList2 } from "./listeners"
+import { searchutil } from "./utils-dom"
+import { listenerForGetPosts, listenerToSeeProfile } from "./events"
 
 export function description(){
     const descriptionElem = document.createElement("div")
@@ -145,13 +146,13 @@ export function descriptionUpdated(value){
     return descriptionElem
 }
 
-export function createHeader(value){
+export function  createHeader(value){
     const headerElem = document.getElementById("app-header")
     headerElem.innerHTML= ` 
     <div class="ppal-navbar">
     <ul class="main-menu">
         <li class="main-menu-img"><a href=""><img src="https://cdn-icons-png.flaticon.com/512/25/25698.png" alt="Logo de la empresa"></a></li>
-        <li class="main-menu-text"><a href="">Publicaciones</a></li>
+        <li class="main-menu-text"><a id="app-posts">Publicaciones</a></li>
         <li class="main-menu-text"><a id="create-list">Favoritos</a></li>
     </ul>
     <form id="form-search" class="search-bar" role="search">
@@ -160,9 +161,12 @@ export function createHeader(value){
     </form>
     <ul class="main-menu">
         <li class="main-menu-text"><a href=""></a>${value.userName}</li>
-        <li class="main-menu-img"><a href=""><img src=${value.imgProfile} alt="Foto del usuario"></a></li>
+        <li class="main-menu-img"><a  id="app-profile"><img  src=${value.imgProfile} alt="Foto del usuario"></a></li>
     </ul>
 </div>
     `
+    searchutil()
+    listenerForGetPosts()
+    listenerToSeeProfile()
     listenerForCreateList2()
 }

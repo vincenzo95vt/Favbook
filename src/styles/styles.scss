@@ -3,6 +3,7 @@
 @use "./header.scss";
 @use "./login.scss";
 @use "./singup.scss";
+@use "./postCard.scss";
 @use "./updateProfile.scss";
 @use "./profileUser.scss";
 li {
@@ -17,6 +18,15 @@ body{
   font-family: "Radio Canada Big", sans-serif;
   color: basics.$primary-color;
   background:linear-gradient(to bottom right, #ff0000, #0000ff);
+  height: 100%;
+  background-repeat: no-repeat;
+  main{
+
+  }
+  footer{
+    position: fixed;
+    bottom: 0;
+  }
   input {
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
@@ -46,7 +56,14 @@ body{
     color: #fff;
     font-size: 16px;
   }
+  svg{
+    width: 7%;
+    height: auto;
+    color: basics.$secondary-color;
+  }
+  
 }
+
 
 
 footer {

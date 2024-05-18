@@ -1,6 +1,9 @@
-import { login, signUp } from "../api/apiConnectionBack"
-import {createSignUp, createLogin, createCardUser,} from "../DOM/create-dom"
-import { searchApi } from "../api/apiConnectionBack"
+import {createSignUp, createLogin, createCardUser} from "../DOM/create-dom"
+import { fetchPosts } from "../api/posts/fetchPosts"
+import { searchApi } from "../api/users/fetchUsers"
+import { mapPostData } from "../mappers/mapper"
+import { addPostBox } from "./homeHTMLElements"
+import { createHeader } from "./profileHTMLElemens"
 
 export function loginOrSignUp(){
     const appElem = document.getElementById("app")
@@ -26,3 +29,13 @@ export function listenerForSignUp(){
     })
 }
 
+
+export function searchutil(){
+    const searchElemtn = document.getElementById("form-search")
+     searchElemtn.addEventListener("submit", (event) => {
+        event.preventDefault()
+        searchApi();
+    })
+
+    
+}

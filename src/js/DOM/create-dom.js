@@ -1,6 +1,5 @@
 import { loginOrSignUp } from "./utils-dom";
-import { listenerForCreateList, listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./listeners";
-import { getUserDetails } from "../api/apiConnectionBack";
+import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
 import {
     imgAndName,
     imgAndNameUpdated,
@@ -13,14 +12,19 @@ import {
     editProfile,
     createHeader
 } from "./profileHTMLElemens";
-import { mapUserData } from "../mappers/mapper";
+import { fetchPosts } from "../api/posts/fetchPosts";
+import { addPostBox } from "./homeHTMLElements";
+import { mapPostData } from "../mappers/mapper";
 
 
-
-
-export function createHomePage() {
+export async function createHomePage(value){
     createHeader(value)
-    addPostBox(value)
+    const data = await fetchPosts()
+    data.forEach(post =>{
+        const mappedData = mapPostData(post)
+        addPostBox(mappedData)
+    })
+
 }
 
 export function createUpdateProfileCard(value) {
@@ -126,30 +130,7 @@ export function createSignUp() {
 
 
 
-// function addProfileData(value) {
-//     const newDiv = document.createElement("div")
-//     const otherDiv = document.createElement("div")
-//     const newH2 = document.createElement("h2")
-//     newH2.className = "profile-username"
-//     newH2.innerHTML = `${value}` //Aqui iria el nombre de usuario que nos traeremos de la api nuestra.
-//     otherDiv.appendChild(newH2)
-//     otherDiv.appendChild(popUpWindow())
-//     newDiv.appendChild(profileImg())
-//     newDiv.appendChild(otherDiv)
-// }
 
-function profileImg(value) {
-    const newImg = document.createElement("img")
-    newImg.className = "img-profile"
-    newImg.src = value //Ruta de la imagen de perfil del usuario.
-    newImg.alt = "Profile Picture"
-}
-
-function addImgPost(value) {
-    const newImg = document.createElement("img")
-    newImg.className = "post-image";
-    newImg.src = value; //Aqui iria el url que le vamos a pasar por parametros "value"    
-}
 //Funcion para crear la tarjeta del usuario 
 export function createCardUser(userData) {
     //obtener le elememento del Dom con el id "app"

@@ -9,7 +9,8 @@ export function mapUserData(data){
         imgProfile: data.imgProfile ?? defaultValue,     
         description: data.description ?? defaultValue, 
         genre: data.genre ?? defaultValue,
-        privacy: data.privacy ?? defaultValue
+        privacy: data.privacy ?? defaultValue,
+        myLists: data.myLists ?? defaultValue
     }
 }
 

@@ -1,5 +1,5 @@
 import { loginOrSignUp } from "./utils-dom";
-import { listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
+import { listenerForCreateList, listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile } from "./events";
 import {
     imgAndName,
     imgAndNameUpdated,
@@ -70,18 +70,20 @@ export function createLogin() {
     loginOrSignUp()
     const appElem = document.getElementById("app")
     appElem.innerHTML = `
-    <div id="login-box">
-    <h2 class="login-title">Iniciar sesión</h2>
-        <form id="controllers" action="">
-            <div class= "info-container">
-                <input id="email" type="email" name="user" placeholder="Correo Electrónico">
-                <input id="password" type="password" name="password" placeholder="Contraseña">
-            </div>
-            <div class="login-button">
-                <button class="submit-button" type="submit">Confirmar</button>
-            </div>
-        </form>
-    <a class="not-user">¿No estas registrado?</a>`
+    <div class="login">
+        <div id="login-box">
+        <h2 class="login-title">Iniciar sesión</h2>
+            <form id="controllers" action="">
+                <div class= "info-container">
+                    <input id="email" type="email" name="user" placeholder="Correo Electrónico">
+                    <input id="password" type="password" name="password" placeholder="Contraseña">
+                </div>
+                <div class="login-button">
+                    <button class="submit-button" type="submit">Confirmar</button>
+                </div>
+            </form>
+        <a class="not-user">¿No estas registrado?</a>
+    </div>`
     listenerForLogin()
 }
 
@@ -195,10 +197,12 @@ export function createCardUser(userData) {
 export function createListBuilder(){
     const appElem = document.getElementById("app")
     appElem.innerHTML = `
-        <form class="lists" id="send-list">
+    <div class="lists">
+        <form class="form-lists" id="send-list">
             <input id="name" type="name" name="user" placeholder="Nombre de la lista">
             <input id="description" type="text" name="description" placeholder="Descripcion">
             <button type="submit">Crear lista</button>
-        </form>`
+        </form>
+    </div>`
     listenerForCreateList();
 }

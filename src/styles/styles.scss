@@ -20,13 +20,6 @@ body{
   background:linear-gradient(to bottom right, #ff0000, #0000ff);
   height: 100%;
   background-repeat: no-repeat;
-  main{
-
-  }
-  footer{
-    position: fixed;
-    bottom: 0;
-  }
   input {
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
@@ -74,6 +67,7 @@ footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-block: 10px;
         .footer-index {
             display: flex;
             gap: 15px;
@@ -212,4 +206,10 @@ footer {
 .social-media a:hover .tooltip-social {
   opacity: 1;
   transform: translate(-50%, -130%);
+}
+.lists {
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
 }

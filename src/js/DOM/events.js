@@ -1,6 +1,6 @@
 import { addNewComment, fetchPosts, getPostById } from "../api/posts/fetchPosts"
-import {getUserDetails, login, signUp, updateProfileData, userData} from "../api/users/fetchUsers"
-import { createUpdateProfileCard } from "./create-dom"
+import {createList, getUserDetails, login, signUp, updateProfileData, userData} from "../api/users/fetchUsers"
+import { createListBuilder, createUpdateProfileCard } from "./create-dom"
 import { addCommentField, addPostBox, addPreviousComments } from "./homeHTMLElements"
 import { mapPostData } from "../mappers/mapper"
 import { createHeader } from "./profileHTMLElemens"
@@ -109,3 +109,18 @@ export function listenerForSeeComments(){
     })
 }
 
+export function listenerForCreateList(){
+    const createListElem = document.getElementById("send-list")
+    createListElem.addEventListener("submit", () => {
+        console.log("he entrado lista creada")
+        createList();
+    })
+}
+
+export function listenerForCreateList2(){
+    const createList = document.getElementById("create-list");
+    createList.addEventListener("click", () => {
+        console.log("he entrado listas")
+        createListBuilder()
+    })
+}

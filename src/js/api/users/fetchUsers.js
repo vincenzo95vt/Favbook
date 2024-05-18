@@ -250,6 +250,76 @@ export async function searchApi(){
 
 };
 
+export async function createList() {
+    // Obtenemos el id del usuario y lo guardamos en userId
+    const userId = userData.id;
+
+    //Cogemos el token del localStorage
+    const token = localStorage.getItem("token")
+
+    // Le decimos que guarde el valor del nombre de la lista en la constante nameValue
+    const name = document.getElementById("name");
+    const nameValue = name.value;
+
+    // Le decimos que guarde el valor de la descripcion de la lista en la constante descriptionValue
+    const description = document.getElementById("description");
+    const descriptionValue = description.value;
+
+    // Todo esto lo coge bien
+    // console.log(userId)
+    // console.log(token)
+    // console.log(nameValue)
+    // console.log(descriptionValue)
+
+
+    try {
+        const response = await fetch(`http://localhost:4000/user/${userId}`, {
+            method: "PATCH", 
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": token,
+            },
+            body: JSON.stringify({myLists: [{name: nameValue, description: descriptionValue}]}),
+
+        });
+
+        const data = await response.json();
+        console.log(data);
+        
+    } catch (error) {
+        console.error("Error: Cannot get the data")
+    }
+}
+
+// export async function addFavourite () {
+//     // Obtenemos el id del usuario y lo guardamos en userId
+//     const userId = userData.id;
+
+//     // Obtenemos el token del localStorage
+//     const token = localStorage.getItem("token")
+
+//     // Obtenemos el id de la lista en la cual se va a insertar la publicacion
+//     const listId = userData.myLists._id
+//     console.log(listId)
+
+//     try {
+//         const response = await fetch(`http://localhost:4000/user/${userId}`, {
+//             method: "PATCH", 
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "auth-token": token,
+//             },
+
+//         });
+
+//         const data = await response.json();
+//         console.log(data);        
+
+        
+//     } catch (error) {
+//         console.error("Error: Cannot push the data", error)
+//     }
+// }
 
 
 

@@ -1,5 +1,5 @@
 import { searchutil } from "./utils-dom"
-import { listenerForGetPosts, listenerToSeeProfile } from "./events"
+import { listenerForCreateList2, listenerForGetPosts, listenerToSeeProfile } from "./events"
 
 export function description(){
     const descriptionElem = document.createElement("div")

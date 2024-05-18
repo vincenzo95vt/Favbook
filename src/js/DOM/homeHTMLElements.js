@@ -1,4 +1,5 @@
-import { listenerForAddComments, listenerForAddCommentsField, listenerForSeeComments } from "./events";
+import { mapComments } from "../mappers/mapper";
+import { listenerForAddComments, listenerForSeeComments } from "./events";
 
 export function addPostBox(value){
     
@@ -24,11 +25,10 @@ export function addPostBox(value){
                 </div>
                 <div class="sendComments" id="comment-form-${value.id}">
                     <label for="comment">Comentario:</label><br>
-                    <textarea id="comment" id-post=${value.id} name="comment" rows="4" cols="30" placeholder ="¡Escribe aquí tu comentario!">
+                    <textarea id="comment-${value.id}" id-post=${value.id} name="comment" rows="auto" cols="30" placeholder ="¡Escribe aquí tu comentario!">
                     </textarea><br>
                     <div class="submit-cancel"> 
                         <button id="submit-${value.id}">Enviar
-                        <button id="cancelar-${value.id}">Cancelar
                     </div>
                     </div>
                 <div class="postCard-comments" id="app-comments-${value.id}" >
@@ -36,24 +36,30 @@ export function addPostBox(value){
             </div>
         <div>
     ` 
-    console.log(value)
 
-    listenerForAddCommentsField(value.id)
+    // listenerForAddCommentsField(value.id)
     listenerForAddComments(value.id)
     listenerForSeeComments(value.id)        
     return divElem
 }
 
-export function addPreviousComments(value, id) {
-    const postElem = document.getElementById(`app-comments-${id}`);
-    postElem.innerHTML =`
-            <li>
-                <p>${value.usuario}</p>
-                <p>${value.content}</p>
-                <p>${value.date}</p>
-            </li>
-    `;
-    return postElem
+export function addPreviousComments(data, id){
+    let commentsHTML = ""; 
+
+    data.forEach(comment => {
+        const mappedComment = mapComments(comment);
+        commentsHTML += `
+            <div>
+                <p>${mappedComment.usuario}</p>
+                <p>${mappedComment.content}</p>
+                <p>${mappedComment.date}</p>
+            </div>
+        `;
+    });
+
+    const commentElem = document.getElementById(`app-comments-${id}`);
+    commentElem.innerHTML = commentsHTML; 
+    return commentElem;
 };
 
 

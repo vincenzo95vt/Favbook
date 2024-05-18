@@ -4,8 +4,9 @@
         height: 95%;
         margin-bottom: 5%;
         .postCard{
+            overflow: hidden;
             width: 25rem;
-            height: 100%;
+            height: 800px;
             box-shadow: 0 2px 24px -2px rgba(0, 0, 0, 0.34);
             padding-top:5% ;
             border-radius: 45px;
@@ -13,7 +14,7 @@
             flex-direction: column;
             justify-content: space-between; /* Centrar horizontalmente los elementos hijos */
             align-items: center; 
-            margin: 20px;
+            margin-bottom: 100px;
 
             svg{
                 &:hover{
@@ -28,6 +29,7 @@
                 .submit-cancel{
                     display: flex;
                     justify-content: space-around;
+                    height: auto;
                 }
                 button{
                     width: 20%;
@@ -76,12 +78,13 @@
                 }
                 
             }
-            .previous-comments{
-                visibility: visible;
-            }
             .postCard-comments{
                 overflow-x: hidden;
-                height: 100%;
+                width: 80%;
+                height: 300em;
+                div{
+                    height: fit-content;
+                }
             }
         }   
     }

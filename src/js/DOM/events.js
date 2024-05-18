@@ -14,6 +14,7 @@ export function listenerForLogin(){
         login()
         appElem.innerHTML = ""
         createHeader(userData)
+        
     })
 
 }
@@ -72,27 +73,25 @@ export function listenerForEditProfile(){
     })
 }
 
-export function listenerForAddCommentsField(value){
-    const cmntElem = document.getElementById(`add-${value}`)
-    const containerField = document.getElementById(`comment-form-${value}`)
-    cmntElem.addEventListener("click", async (e)=>{
-        if(containerField.style.display === "none"){
-            containerField.style.display = "block"
-        }
-            containerField.style.display = "none"
+// export function listenerForAddCommentsField(value){
+//     const cmntElem = document.getElementById(`add-${value}`)
+//     const containerField = document.getElementById(`comment-form-${value}`)
+//     cmntElem.addEventListener("click", async (e)=>{
+//         if(containerField.style.display === "none"){
+//             containerField.style.display = "block"
+//         }
+//             containerField.style.display = "none"
             
         
-    })
-}
+//     })
+// }
 
 export function listenerForAddComments(value){
-    const textAreaElem = document.getElementById("comment")
-    const idPost = textAreaElem.getAttribute("id-post")
     const formElem = document.getElementById(`submit-${value}`)
-    
     formElem.addEventListener("click", ()=>{
+        const idPost =  value
+        console.log("entra por listener de añadir comentarios", idPost)
         addNewComment(idPost)
-
     })
 }
 
@@ -101,10 +100,7 @@ export function listenerForSeeComments(value){
     formElem.addEventListener("click", async () =>{
         const data = await getPostById(value)
         const comments = data.comments
-        comments.forEach(comment => {
-            addPreviousComments(comment, value)
-            console.log(comment)
-        })
+        addPreviousComments(comments, value)
     })
 }
 

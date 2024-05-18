@@ -34,23 +34,25 @@ export async function fetchPosts(){
 }
 
 export async function addNewComment(id){
-    const commentElem = document.getElementById("comment")
+    const commentElem = document.getElementById(`comment-${id}`)
     const commentValue = commentElem.value
     console.log(commentValue)
     const idPost = id
+    console.log(idPost)
     const token = localStorage.getItem("token")
-
-    const requestBody = {}
-    requestBody.comment = commentValue
+    console.log("entra por la funcion que lo añade a bbdd", idPost)
+    
 
     try {
-        const response = await fetch(`http://localhost:4000/posts/addNewReview/${id}`, {
+        const response = await fetch(`http://localhost:4000/posts/addNewReview/${idPost}`, {
             method: "POST", 
             headers: {
+                "Content-Type": "application/json",
                 "auth-token": token
             },
-            body:requestBody
-        });;
+            body:JSON.stringify({comment: commentValue}),
+
+        });
         const data = await response.json()
         console.log(data)
         if(data.status === 400){
@@ -78,7 +80,9 @@ export async function getPostById(value){
         console.log("entra")
         if(data.status === "Error"){
                 throw new Error('Something went wrong')
-        }else return data.data
+        }else {
+            console.log("se añadio correctamente el id", idPost)
+            return data.data }
                     
     } catch (error) {
         console.error("Error: Cannot get the data", error.message)

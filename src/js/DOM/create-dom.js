@@ -22,7 +22,6 @@ export async function createHomePage(value){
     const data = await fetchPosts()
     data.forEach(post =>{
         const mappedData = mapPostData(post)
-        console.log(mappedData)
         addPostBox(mappedData)
     })
 

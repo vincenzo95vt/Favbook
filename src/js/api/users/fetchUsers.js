@@ -305,7 +305,7 @@ export async function searchUsers() {
 // _____________________________________
 export async function searchProduct() {
     // Obtener el valor de búsqueda del input
-    const searchInput = document.getElementById("valueSearch");
+    const searchInput = document.getElementById("valueSearch-product");
     const searchValue = searchInput.value;
     console.log(searchValue);
     

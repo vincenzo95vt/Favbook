@@ -26,12 +26,24 @@ export function listenerForSignUp(){
 }
 
 export function searchutil(){
+    // bucamos por su Id
     const searchElemtn = document.getElementById("form-search")
+    // Escucha de evento 
      searchElemtn.addEventListener("submit", (event) => {
+        // Evita el comportamiento predeterminado
         event.preventDefault()
-       
          searchUsers()
-         searchProduct()
+        //  searchProduct()
     })
 };
+
+export function searchUtilProduct(){
+    //Bucamos por el id 
+    const utilProduct = document.getElementById("form-search-product")
+     utilProduct.addEventListener("submit", (event) => {
+        event.preventDefault()
+        searchProduct()
+     })
+
+    };
 

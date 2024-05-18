@@ -1,4 +1,4 @@
-import { searchutil} from "./utils-dom"
+import { searchutil, searchUtilProduct } from "./utils-dom"
 import { listenerForGetPosts, listenerToSeeProfile } from "./events"
 
 export function description(){
@@ -159,6 +159,10 @@ export function createHeader(value){
         <input id="valueSearch" class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
         <button id="valueButton "class="search-button" type="submit">Buscar usuarios</button>
     </form>
+    <form id="form-search-product" class="search-bar" role="search">
+    <input id="valueSearch-product" class="search-input" type="search" placeholder="  Escriba algo..." aria-label="Search">
+    <button id="valueButton "class="search-button" type="submit">Buscar productos</button>
+</form>
     <ul class="main-menu">
         <li class="main-menu-text"><a href=""></a>${value.userName}</li>
         <li class="main-menu-img"><a  id="app-profile"><img  src=${value.imgProfile} alt="Foto del usuario"></a></li>
@@ -166,6 +170,7 @@ export function createHeader(value){
 </div>
     `
     searchutil()
+    searchUtilProduct()
     listenerForGetPosts()
     listenerToSeeProfile()
 }

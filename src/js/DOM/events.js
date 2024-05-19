@@ -1,16 +1,16 @@
 import { addNewComment, fetchPosts, getPostById } from "../api/posts/fetchPosts"
-import { createList, getUserDetails, login, signUp, updateProfileData, userData } from "../api/users/fetchUsers"
-import { createListBuilder, createUpdateProfileCard } from "./create-dom"
+import { getSearchedUserDetails,  createList, getUserDetails, login, signUp, updateProfileData, userData } from "../api/users/fetchUsers"
+import { createProfileCard, createListBuilder, createUpdateProfileCard } from "./create-dom"
 import { addPostBox, addPreviousComments } from "./homeHTMLElements"
-import { mapComments, mapPostData } from "../mappers/mapper"
-import { createHeader } from "./profileHTMLElemens"
+import { mapPostData } from "../mappers/mapper"
+import { createCardUserSearched, createHeader } from "./profileHTMLElemens"
 
 
 export function listenerForLogin(){
     const loginElem = document.getElementById("controllers")
     console.log("entro")
     const appElem = document.getElementById("app")
-    loginElem.addEventListener("submit", (event) => {
+    loginElem.addEventListener("submit", () => {
         login()
         appElem.innerHTML = ""
         createHeader(userData)
@@ -48,7 +48,6 @@ export function listenerForGetUserProfile(){
     const profileBtn = document.getElementById("button-go-profile")
     profileBtn.addEventListener("click", ()=>{
         getUserDetails()
-        console.log("He entrado")
     })
 }
 
@@ -73,19 +72,6 @@ export function listenerForEditProfile(){
     })
 }
 
-// export function listenerForAddCommentsField(value){
-//     const cmntElem = document.getElementById(`add-${value}`)
-//     const containerField = document.getElementById(`comment-form-${value}`)
-//     cmntElem.addEventListener("click", async (e)=>{
-//         if(containerField.style.display === "none"){
-//             containerField.style.display = "block"
-//         }
-//             containerField.style.display = "none"
-            
-        
-//     })
-// }
-
 export function listenerForAddComments(value){
     const formElem = document.getElementById(`submit-${value}`)
     formElem.addEventListener("click", ()=>{
@@ -101,6 +87,22 @@ export function listenerForSeeComments(value){
         const data = await getPostById(value)
         const comments = data.comments
         addPreviousComments(comments, value)
+    })
+}
+
+export function listenerToSeeOtherProfiles(idProfile){
+    const idDiv = document.getElementById(`cardClient-${idProfile}`)
+    idDiv.addEventListener("click", async (e)=>{
+        const data = await getSearchedUserDetails(idProfile)
+        createCardUserSearched(data)
+    })
+}
+
+export function listenerToSeeOtherProfiles(idProfile){
+    const idDiv = document.getElementById(`cardClient-${idProfile}`)
+    idDiv.addEventListener("click", async (e)=>{
+        const data = await getSearchedUserDetails(idProfile)
+        createCardUserSearched(data)
     })
 }
 

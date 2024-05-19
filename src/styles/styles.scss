@@ -6,6 +6,7 @@
 @use "./postCard.scss";
 @use "./updateProfile.scss";
 @use "./profileUser.scss";
+@use "./userDetails.scss";
 li {
     list-style: none;
 }
@@ -103,8 +104,8 @@ footer {
 // carta de clientes cuando buscar por el buscador
 
 .card-client {
-  background: #555;
   width: 18rem;
+  height: auto;
   padding-top: 25px;
   padding-bottom: 25px;
   padding-left: 20px;
@@ -112,13 +113,22 @@ footer {
   border: 4px solid #fff;
   box-shadow: 0 6px 10px #212121;
   border-radius: 10px;
-  text-align: center;
+  text-align: center; 
   color: #fff;
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
   display: inline-block;
   margin-right: 5px; /* Agregar margen a la derecha de cada tarjeta */
+  &:hover{
+    cursor: pointer;
+  }
 
+}
+.card-client{
+  .candado{
+    width: 80%;
+    height: 80%;
+  }
 }
 
 .card-client:hover {
@@ -220,6 +230,76 @@ footer {
   opacity: 1;
   transform: translate(-50%, -130%);
 }
+
+// Carta de producto cuando buscas por productos 
+
+.card {
+  width: 200px;
+  height: 289px;
+  padding: .8em;
+  background: #f5f5f5;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-right: 5px;
+ }
+ 
+ .card-img {
+  
+  height: 40%;
+  width: 100%;
+  border-radius: .5rem;
+  transition: .3s ease;
+ }
+ 
+ .card-info {
+  padding-top: 10%;
+ }
+ 
+ svg {
+  width: 20px;
+  height: 20px;
+ }
+ 
+ .card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+ }
+ 
+ /*Text*/
+ .text-title {
+  font-weight: 900;
+  font-size: 1.2em;
+  line-height: 1.5;
+ }
+ 
+ .text-body {
+  font-size: .9em;
+  padding-bottom: 10px;
+ }
+ 
+ /*Button*/
+ .card-button {
+  border: 1px solid #252525;
+  display: flex;
+  padding: .3em;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: .3s ease-in-out;
+ }
+ 
+ .card-button:hover {
+  border: 1px solid #ffcaa6;
+  background-color: #ffcaa6;
+ }
+ .svg-icon {
+  height: 20px;
+  width: 20px;
+ }
 .lists {
   height: 85vh;
   display: flex;

@@ -1,5 +1,5 @@
 import { loginOrSignUp } from "./utils-dom";
-import { listenerForCreateList, listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile, listenerToSeeOtherProfiles } from "./events";
+import { addToFavourites, clearAllFavourites, listenerForCreateList, listenerForEditProfile, listenerForGetUserProfile, listenerForLogin, listenerForSignUp, listenerForUpdateProfile, listenerToSeeOtherProfiles } from "./events";
 import {
     imgAndName,
     imgAndNameUpdated,
@@ -15,7 +15,6 @@ import {
 import { fetchPosts } from "../api/posts/fetchPosts";
 import { addPostBox } from "./homeHTMLElements";
 import { mapPostData } from "../mappers/mapper";
-import { getUserCreatorName } from "../api/users/fetchUsers";
 
 
 export async function createHomePage(value){
@@ -150,6 +149,7 @@ export function createCardUser(userData) {
 
         if(user.privacy === "private"){
             content += ` 
+            <div class="prueba">
             <div class="card-client" id="cardClient-${user._id}">
             <div class="user-picture">
                 <svg id="imgProfile" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
@@ -191,6 +191,7 @@ export function createCardUser(userData) {
                     <span class="tooltip-social">LinkedIn</span>
                 </a>
             </div>
+        </div>
         </div>
         `
         }else if(user.privacy === "public"){
@@ -244,9 +245,11 @@ export function createCardUser(userData) {
         `
         }
     });
-    
     appElem.innerHTML = content;
-
+    userData.forEach(data => {
+        listenerToSeeOtherProfiles(data._id);
+    })
+    
 }
 
 export function createListBuilder(){
@@ -261,3 +264,30 @@ export function createListBuilder(){
     </div>`
     listenerForCreateList();
 }
+
+export function showListsBuilder (value, list ) {
+    let listsHTML = "<h2>Mis Listas</h2>"; 
+
+    list.forEach(data => {
+        console.log(data)
+        console.log(data._id)
+        listsHTML += `
+        <div>
+             <p>Nombre: ${data.name}</p>
+             <p>Descripción: ${data.description}</p>
+             <svg xmlns="http://www.w3.org/2000/svg" class="addComments" id="addFavourites-${data._id}" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="20" height="20">
+                    <g>
+                        <path d="M480,224H288V32c0-17.673-14.327-32-32-32s-32,14.327-32,32v192H32c-17.673,0-32,14.327-32,32s14.327,32,32,32h192v192   c0,17.673,14.327,32,32,32s32-14.327,32-32V288h192c17.673,0,32-14.327,32-32S497.673,224,480,224z"/>
+                    </g>
+             </svg>
+        </div>
+        `;
+    });
+    const postCard = document.getElementById(`postCard-${value}`);
+    postCard.innerHTML = listsHTML; 
+    list.forEach(data => {
+        addToFavourites(value, data._id);
+    })
+    return postCard;
+};
+

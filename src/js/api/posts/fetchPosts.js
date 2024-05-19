@@ -63,7 +63,7 @@ export async function addNewComment(id){
         
 
     } catch (error) {
-        invalidToken(data)
+        handleTokenExpired(data)
         console.error("Error: Cannot add the data", error.message)
         
     }
@@ -85,7 +85,7 @@ export async function getPostById(value){
             return data.data }
                     
     } catch (error) {
-        invalidToken(data)
+        handleTokenExpired(data)
         console.error("Error: Cannot get the data", error.message)
 
     }
@@ -129,7 +129,7 @@ export async function searchProduct() {
 
     } catch (error) {
         // Capturar y manejar errores
-        invalidToken(data)
+        handleTokenExpired(data)
         console.error("Error al realizar la búsqueda", error.message);
     }
 };

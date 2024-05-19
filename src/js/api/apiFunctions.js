@@ -1,3 +1,5 @@
+import { createLogin } from "../DOM/create-dom";
+
 export function getSearchUrl(value, controller=null, id=null) {
     //Hice esta funcion para ahorrarnos lineas de codigo, en el primer parametro, le pasamos la ruta que queremos coger, si usuarios o publicaciones
     //En el siguiente parametro, le pasamos el endpoint que queremos acceder y en el tercero el "id", por si hiciera falta en algun endpoint.
@@ -35,5 +37,5 @@ export function fetchMethods(type, header, body = null) {
 export function handleTokenExpired(){    
     alert("Su sesión ha caducado, se redigirá directamente al login. ");
     localStorage.clear();
-    loginPage();
+    createLogin();
 }

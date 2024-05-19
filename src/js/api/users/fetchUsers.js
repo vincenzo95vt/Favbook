@@ -1,5 +1,5 @@
 import { fetchMethods, getSearchUrl, handleTokenExpired } from "../apiFunctions";
-import { createProfileCard, createCardUser, createLogin, createSignUp, createHomePage } from "../../DOM/create-dom";
+import { createProfileCard, createCardUser, createLogin, createSignUp, createHomePage, showListsBuilder } from "../../DOM/create-dom";
 import { mapUserData, } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
 import { changePrivacy, noUsersFoundCard } from "../../DOM/utils-dom";
@@ -20,7 +20,7 @@ export async function getUserDetails(){
         const userData = await mapUserData(data.data)
         createProfileCard(userData)
     } catch (error) {
-        invalidToken(data)
+        handleTokenExpired(data)
         console.error("Error: Cannot get the data")
     }
     window.onload = async () => {
@@ -134,7 +134,7 @@ export async function signUp() {
         const methods = fetchMethods("POST", {"Content-Type": "application/json"}, requestedBody)
         const response = await fetch(url, methods)
         const data = await response.json()
-        invalidToken(data)
+        handleTokenExpired(data)
         if(response.status === 409) return alert(data.message)
         //Vamo a comprobar que el usuario no exista ya en la base de datos.
         if(data){
@@ -218,10 +218,6 @@ export async function searchUsers() {
         if (userData.data.length === 0) {
             // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
             return noUsersFoundCard(searchValue)
-            res.status(200).json({
-                status: "success",
-                message: "No users found"
-            });
         } else {
             // Mapear los datos de usuario
             // Crear tarjeta de usuario
@@ -231,8 +227,8 @@ export async function searchUsers() {
 
     } catch (error) {
         // Capturar y manejar errores
-        invalidToken(userData)
-        console.log("Error al realizar la búsqueda por usuarios", error.message);
+        handleTokenExpired(userData)
+        return console.log("Error al realizar la búsqueda por usuarios", error.message);
 
     }
 };
@@ -260,13 +256,13 @@ export async function createList() {
 
 
     try {
-        const response = await fetch(`http://localhost:4000/user/${userId}`, {
-            method: "PATCH", 
+        const response = await fetch(`http://localhost:4000/user/createList/${userId}`, {
+            method: "POST", 
             headers: {
                 "Content-Type": "application/json",
                 "auth-token": token,
             },
-            body: JSON.stringify({myLists: [{name: nameValue, description: descriptionValue}]}),
+            body: JSON.stringify({name: nameValue, description: descriptionValue}),
 
         });
 
@@ -277,36 +273,6 @@ export async function createList() {
         console.error("Error: Cannot get the data")
     }
 }
-
-// export async function addFavourite () {
-//     // Obtenemos el id del usuario y lo guardamos en userId
-//     const userId = userData.id;
-
-//     // Obtenemos el token del localStorage
-//     const token = localStorage.getItem("token")
-
-//     // Obtenemos el id de la lista en la cual se va a insertar la publicacion
-//     const listId = userData.myLists._id
-//     console.log(listId)
-
-//     try {
-//         const response = await fetch(`http://localhost:4000/user/${userId}`, {
-//             method: "PATCH", 
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "auth-token": token,
-//             },
-
-//         });
-
-//         const data = await response.json();
-//         console.log(data);        
-
-        
-//     } catch (error) {
-//         console.error("Error: Cannot push the data", error)
-//     }
-// }
 
 
 export async function getSearchedUserDetails(idProfile){
@@ -326,7 +292,7 @@ export async function getSearchedUserDetails(idProfile){
 
     } catch (error) {
          // Capturar y manejar errores
-         invalidToken(data)
+         handleTokenExpired(data)
          console.error("Error al realizar la búsqueda", error.message);
     }
 }
@@ -351,6 +317,42 @@ export async function  getUserCreatorName(id){
     }
 }
 
+export async function getLists (value) {
+    try {
+        const token = localStorage.getItem("token")
+        const url = getSearchUrl("user", "profileUser")
+        console.log(url)   
+        const methods = fetchMethods("GET", {"auth-token": token})
+        const response = await fetch(url, methods)
+        const userData = await response.json()
+        const postId = value 
+        console.log(postId)
+        console.log(userData.data.myLists)
+
+        showListsBuilder(postId, userData.data.myLists)
+        
+        
+
+    } catch (error) {
+        console.error("Error al realizar la búsqueda", error.message);
+    }
+}
+
+export async function myNewList (value, id) {
+    try {
+        const postId = value
+        const token = localStorage.getItem("token")
+        const url = getSearchUrl("user", "addPostToList", id)
+        console.log(url)   
+        const methods = fetchMethods("POST", {"Content-Type": "application/json", "auth-token": token}, {postId: postId})
+        console.log("esto es postId",postId)
+        const response = await fetch(url, methods)
+        const userData = await response.json()
+        console.log(userData)
+    } catch (error) {
+        console.error("Error al realizar la búsqueda", error.message);
+    }
+}
 
 
 

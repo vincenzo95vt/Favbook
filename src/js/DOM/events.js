@@ -1,6 +1,6 @@
 import { addNewComment, fetchPosts, getPostById } from "../api/posts/fetchPosts"
-import { getSearchedUserDetails,  createList, getUserDetails, login, signUp, updateProfileData, userData } from "../api/users/fetchUsers"
-import { createProfileCard, createListBuilder, createUpdateProfileCard } from "./create-dom"
+import { getSearchedUserDetails,  createList, getUserDetails, login, signUp, updateProfileData, userData, getLists, myNewList } from "../api/users/fetchUsers"
+import { createProfileCard, createListBuilder, createUpdateProfileCard, showListsBuilder } from "./create-dom"
 import { addPostBox, addPreviousComments } from "./homeHTMLElements"
 import { mapPostData } from "../mappers/mapper"
 import { createCardUserSearched, createHeader } from "./profileHTMLElemens"
@@ -92,17 +92,12 @@ export function listenerForSeeComments(value){
 
 export function listenerToSeeOtherProfiles(idProfile){
     const idDiv = document.getElementById(`cardClient-${idProfile}`)
+    console.log(idProfile)
     idDiv.addEventListener("click", async (e)=>{
+        console.log("he entrado en la tarjeta")
         const data = await getSearchedUserDetails(idProfile)
         createCardUserSearched(data)
-    })
-}
-
-export function listenerToSeeOtherProfiles(idProfile){
-    const idDiv = document.getElementById(`cardClient-${idProfile}`)
-    idDiv.addEventListener("click", async (e)=>{
-        const data = await getSearchedUserDetails(idProfile)
-        createCardUserSearched(data)
+        console.log(data)
     })
 }
 
@@ -119,5 +114,26 @@ export function listenerForCreateList2(){
     createList.addEventListener("click", () => {
         console.log("he entrado listas")
         createListBuilder()
+    })
+}
+
+export function clearAllFavourites (value) {
+    console.log(value)
+    const postCard = document.getElementById(`postCard-${value}`)
+    console.log(postCard)
+    const favourites = document.getElementById(`favourites-${value}`);
+    console.log(favourites)
+    favourites.addEventListener("click", () => {
+        console.log("he entrado a favourites")
+        postCard.innerHTML = "";
+        getLists(value);
+    })
+}
+
+export function addToFavourites (postId, id) {
+    const addFavourites = document.getElementById(`addFavourites-${id}`)
+    addFavourites.addEventListener("click", () => {
+        console.log("he entrado a addFavourites")
+        myNewList(postId, id)
     })
 }

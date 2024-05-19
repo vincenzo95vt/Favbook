@@ -9,19 +9,29 @@ export function mapUserData(data){
         imgProfile: data.imgProfile ?? defaultValue,     
         description: data.description ?? defaultValue, 
         genre: data.genre ?? defaultValue,
-        privacy: data.privacy ?? defaultValue
+        privacy: data.privacy ?? defaultValue,
+        myLists: data.myLists ?? defaultValue
     }
 }
 
 export function mapPostData(data){
     const defaultValue = "No disponible"
     return  {
-        id: data.userId ?? defaultValue,
+        _id: data._id ?? defaultValue,
         post: data.post ?? defaultValue,
         postName: data.postName ?? defaultValue, 
         userPoster: data.userPoster ?? defaultValue,
         date: data.date ?? defaultValue,    
         description: data.description ?? defaultValue, 
         comments: data.comments ?? defaultValue
+    }
+}
+export function mapComments(data){
+    const defaultValue = "No disponible"
+    return  {
+        id: data._id ?? defaultValue,
+        usuario: data.usuario ?? defaultValue,
+        content: data.content ?? defaultValue, 
+        date: data.date ?? defaultValue,    
     }
 }

@@ -1,0 +1,93 @@
+#app{
+        .postCard{
+            width: 50rem;
+            box-shadow: 0 2px 24px -2px rgba(0, 0, 0, 0.34);
+            border-radius: 45px;
+            padding: 5%;
+            margin: 10px;
+            display: flex; /* Usar flexbox */
+            flex-direction: column;
+            justify-content: center; /* Centrar horizontalmente los elementos hijos */
+            align-items: center; 
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+            svg{
+                fill: white;
+                &:hover{
+                    cursor: pointer;
+                    fill: rgba(255, 255, 255, 0.6);
+                    transition: all .3s;
+                }
+            }
+            .sendComments{
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                .submit-cancel{
+                    display: flex;
+                    justify-content: space-around;
+                    height: auto;
+                }
+                button{
+                    width: 20%;
+                    font-size: 12px;
+                    border: 1px solid white;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    padding: 5px;
+                    box-shadow: 0 2px 24px -2px rgba(0, 0, 0, 0.34);
+                    &:hover{
+                        background-color: rgba(0, 0, 0, 0.4);
+                        transition: all .3s;
+                    }
+                }
+                label{
+                    font-size: 15px;
+                }
+            }
+            h2{
+                text-align: center;
+            }
+            .img-and-info{
+                width: 80%;
+                overflow-x: hidden;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                p {
+                    margin-top: 10px;
+                }
+                img{
+                    width: 35.5rem;
+                    height: 29rem;
+                    object-fit: cover;
+                    border-radius: 45px;
+                }
+                display: flex;
+                flex-direction: column;
+                .container-date-comments{
+                    display: flex;
+                    justify-content: space-between;
+                }
+                #add{
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                #comments{
+                    width: 5%;
+                    transition: 0.5s;
+                    &:hover{
+                        cursor: pointer;
+                        width: 5.5%;
+                    }   
+                }
+            }
+            .postCard-comments{
+                overflow-x: hidden;
+                width: 80%;
+                height: 150px;
+                margin-top: 20px;
+                
+            }
+}
+}

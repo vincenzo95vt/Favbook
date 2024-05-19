@@ -1,7 +1,13 @@
 import '../styles/styles.scss'; 
-import { listenerForLogin, listenerForSignUp, loginOrSignUp, searchutil } from './DOM/utils-dom';
+import { createHomePage, createLogin} from "./DOM/create-dom"
+const token = localStorage.getItem("token");
+import { userData } from './api/users/fetchUsers';
+if(token !== null){
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    console.log(userData)
+    createHomePage(userData)
+}else{
 
-import { createLogin, createSignUp} from "./DOM/create-dom"
-
-// createLogin()
-searchutil()
+    createLogin()
+}

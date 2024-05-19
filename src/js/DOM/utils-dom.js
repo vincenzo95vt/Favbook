@@ -1,5 +1,6 @@
 import {createSignUp, createLogin, createCardUser} from "../DOM/create-dom"
-import { searchApi } from "../api/users/fetchUsers"
+import { searchUsers,  userData } from "../api/users/fetchUsers"
+import { searchProduct } from "../api/posts/fetchPosts"
 
 export function loginOrSignUp(){
     const appElem = document.getElementById("app")
@@ -24,13 +25,52 @@ export function listenerForSignUp(){
     })
 }
 
-
 export function searchutil(){
+    // bucamos por su Id
     const searchElemtn = document.getElementById("form-search")
+    // Escucha de evento 
      searchElemtn.addEventListener("submit", (event) => {
+        // Evita el comportamiento predeterminado
         event.preventDefault()
-        searchApi();
+         searchUsers()
     })
+};
 
-    
+export function searchUtilProduct(){
+    //Bucamos por el id 
+    const utilProduct = document.getElementById("form-search-product")
+     utilProduct.addEventListener("submit", (event) => {
+        event.preventDefault()
+        searchProduct()
+     })
+
+};
+
+export function noProductsFoundCard(nameSearched){
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    const divElem = document.createElement("div")
+    divElem.innerHTML= `
+    <div>
+        <span>No hemos encontrado el post ${nameSearched}, por favor danos algo mas de informacion o prueba de nuevo con otro nombre.</span>
+    </div>
+    `
+    appElem.appendChild(divElem)
+    return divElem
 }
+
+export function noUsersFoundCard(nameSearched){
+    const appElem = document.getElementById("app")
+    appElem.innerHTML = ""
+    const divElem = document.createElement("div")
+    divElem.innerHTML= `
+    <div>
+        <span>No hemos encontrado el usuario ${nameSearched}, por favor danos algo mas de informacion o prueba de nuevo con otro nombre.</span>
+    </div>
+    `
+    appElem.appendChild(divElem)
+    return divElem
+}
+
+
+

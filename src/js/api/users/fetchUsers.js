@@ -1,7 +1,8 @@
-import { fetchMethods, getSearchUrl } from "../apiFunctions";
+import { fetchMethods, getSearchUrl, handleTokenExpired } from "../apiFunctions";
 import { createProfileCard, createCardUser, createLogin, createSignUp, createHomePage } from "../../DOM/create-dom";
 import { mapUserData, } from "../../mappers/mapper";
 import { fetchPosts } from "../posts/fetchPosts";
+import { changePrivacy, noUsersFoundCard } from "../../DOM/utils-dom";
 
 const stringedData = localStorage.getItem("data")
 export const userData = JSON.parse(stringedData)
@@ -14,13 +15,12 @@ export async function getUserDetails(){
         const methods = fetchMethods("GET", {"auth-token": token})
         const response = await fetch(url, methods);
         const data = await response.json();
-        console.log(data)
-
         //Comprobamos errores
         if(data.status === 404) return console.error("cannot search the data")
         const userData = await mapUserData(data.data)
         createProfileCard(userData)
     } catch (error) {
+        invalidToken(data)
         console.error("Error: Cannot get the data")
     }
     window.onload = async () => {
@@ -38,7 +38,6 @@ export async function login(){
     console.log(emailValue)
 
     try { 
-        
         const url = getSearchUrl("user", "login")
         const methods = fetchMethods("POST", {"Content-type":"application/json"}, {email: emailValue, password: passwordValue})
         const response = await fetch(url, methods);
@@ -73,44 +72,26 @@ export async function login(){
     
 }
 
-// if (errorData.mesagge.inlcude("token invalido")){}
-//           const body = document.querySelector("body");
-//           const sessionExpiredElement = document.createElement("div");
-//           sessionExpiredElement.id = "confirmation";
-//           sessionExpiredElement.innerHTML = `
-//             <p>Su sesion ha caducado. Redirigiendo al login</p>
-//             <img id="logo-confirmation" src="/nexiatransp.png" />
-//           `;
-//           body.appendChild(sessionExpiredElement);
-
-//           setTimeout(() => {
-//             if (sessionExpiredElement) {
-//               sessionExpiredElement.remove();
-//             }
-//             localStorage.clear();
-//             loginPage();
-//           }, 3000);
-//           console.log(error);
-//         }
-//       });
 
 
 export async function refreshToken(){
     try {
         const token_refresh = localStorage.getItem("token_refresh");
-        console.log(token_refresh);
         const url = getSearchUrl("user", "refreshToken")
         const methods = fetchMethods("POST",{"auth-token": token_refresh})
-        const response = await fetch(url, methods);
-        //Si algo falla de repente puede ser por esta funcion de refreshToken. 
-        const newData = await response.json();
+        const response = await fetch(url, methods)
+        //Si algo falla de repente puede ser por esta funcion de refreshToken.
+        const newData = await response.json()
+        console.log(newData)
 
         if(newData) {
             localStorage.setItem('token', newData.token);
             localStorage.setItem("token_refresh", newData.token_refresh);
         }
-        return await fetchPosts()
+        const data = await fetchPosts()
+        return data
     } catch (error) {
+        handleTokenExpired()
         console.error("Error refreshing token:", error)
     }
 }
@@ -147,18 +128,20 @@ export async function signUp() {
             email: emailValue, 
             password: confPassValue,
             genre: genreValue
-            }
+        }
         
         const url = getSearchUrl("user", "signUp")
         const methods = fetchMethods("POST", {"Content-Type": "application/json"}, requestedBody)
         const response = await fetch(url, methods)
         const data = await response.json()
+        invalidToken(data)
         if(response.status === 409) return alert(data.message)
         //Vamo a comprobar que el usuario no exista ya en la base de datos.
         if(data){
             createLogin()
         }
     } catch (error) {
+        
         console.error("Error fetching register posts:", error);
     }
 }
@@ -198,8 +181,11 @@ export async function updateProfileData(){
         const url = getSearchUrl("user", "updateUserDetails")
         const methods = fetchMethods("PATCH", {"auth-token": token, "Content-type":"application/json"}, requestBody)
         const response = await fetch(url, methods);
-        console.log(response)
         const data = await response.json()
+        if (response.status === 401 && data && data.message && data.message.includes("Expired token")) {
+            handleTokenExpired();
+            return; // Detener la ejecución de la función
+        }
         if(data.status === 401){
             alert("You are logged out due to inactivity.")
         }
@@ -209,11 +195,12 @@ export async function updateProfileData(){
 
     } catch (error) {
         console.error("Error fetching posts:", error);
+
     }
-}
+};
 
-export async function searchApi(){
-
+// ____________________________________
+export async function searchUsers() {
     // Obtener el valor de búsqueda del input
     const searchInput = document.getElementById("valueSearch");
     const searchValue = searchInput.value;
@@ -222,19 +209,15 @@ export async function searchApi(){
     }
 
     try {
-        // BUSCAR USUARIOS
-        const userResponse = await fetch(`http://localhost:4000/user/getuser/${searchValue}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const userData = await userResponse.json();
-
+        //  BUSCAR USUARIOS
+        const url = getSearchUrl("user", "getuser", `${searchValue}`)
+        const methods = fetchMethods("GET", {"Content-Type": "application/json"})
+        const response = await fetch(url, methods)
+        const userData = await response.json();
         // Verificar si no se encontraron usuarios
-        if (userData.length === 0) {
+        if (userData.data.length === 0) {
             // Enviar respuesta con mensaje de éxito y sin usuarios encontrados
-            console.log("no hemos encontrado nada")
+            return noUsersFoundCard(searchValue)
             res.status(200).json({
                 status: "success",
                 message: "No users found"
@@ -244,35 +227,17 @@ export async function searchApi(){
             // Crear tarjeta de usuario
                 createCardUser(userData.data);
         }
-
-        // BUSCAR PRODUCTOS
-        const productsResponse = await fetch(`http://localhost:4000/posts/getProducts/${searchValue}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        const productoData = await productsResponse.json();
-
-        // Verificar si no se encontraron productos
-        if (productoData.length === 0) {
-            // Enviar respuesta con mensaje de éxito y sin productos encontrados
-            res.status(200).json({
-                status: "success",
-                message: "Not posts found"
-            });
-        }
-
-        // Mapear los datos de producto
-        const dataProducts  = mapUserData(productoData);
+        
 
     } catch (error) {
         // Capturar y manejar errores
-        console.error("Error al realizar la búsqueda", error.message);
-    }
+        invalidToken(userData)
+        console.log("Error al realizar la búsqueda por usuarios", error.message);
 
+    }
 };
+
+
 
 export async function getSearchedUserDetails(idProfile){
     try {
@@ -291,7 +256,28 @@ export async function getSearchedUserDetails(idProfile){
 
     } catch (error) {
          // Capturar y manejar errores
+         invalidToken(data)
          console.error("Error al realizar la búsqueda", error.message);
+    }
+}
+
+export async function  getUserCreatorName(id){
+    try {
+        const token = localStorage.getItem("token")
+        const url = getSearchUrl("user", "getName", id)
+        console.log(url)   
+        const methods = fetchMethods("GET", {"auth-token": token})
+        const response = await fetch(url, methods)
+        const userData = await response.json()
+        console.log(userData)
+        if(userData.status === "Error"){
+            console.error("Algo ha ido mal recogiendo los datos")
+        }else{
+            return userData.data
+        }
+    } catch (error) {
+        // Capturar y manejar errores
+        console.error("Error al realizar la búsqueda", error.message);
     }
 }
 

@@ -15,13 +15,17 @@ import {
 import { fetchPosts } from "../api/posts/fetchPosts";
 import { addPostBox } from "./homeHTMLElements";
 import { mapPostData } from "../mappers/mapper";
+import { getUserCreatorName } from "../api/users/fetchUsers";
 
 
 export async function createHomePage(value){
     createHeader(value)
     const data = await fetchPosts()
-    data.forEach(post =>{
+    data.forEach(async (post)=>{
         const mappedData = mapPostData(post)
+        // const userIdCreator = post.userCreator
+        // const userCreatorName = await getUserCreatorName(userIdCreator)
+        // console.log(userCreatorName)
         addPostBox(mappedData)
     })
 
@@ -240,7 +244,5 @@ export function createCardUser(userData) {
     });
     
     appElem.innerHTML = content;
-    userData.forEach(user => {
-        listenerToSeeOtherProfiles(user._id);
-    });
+
 }
